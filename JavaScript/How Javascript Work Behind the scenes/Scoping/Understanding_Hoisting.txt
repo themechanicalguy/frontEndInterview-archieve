@@ -1,0 +1,25 @@
+Execution context has following things:
+  1. variable environment
+  2. scope chain
+  3. this keyword
+
+Hoisting: Makes some types of variable accessible/usable in the code before they are actually declared. "Variable lifted to the top of their scope".
+
+Actual:
+Before Execution, code is scanned for variable declaration, and for each new variable a new property is created in teh variable environment object.
+
+                             HOISTED              INITIAL VALUE(use before initialization)           SCOPE
+function declaration         YES                   Actual function                                   block(strict mode) or else function
+var variable                 YES                   undefined                                         function
+let and const variable       NO(tech yes)          Temporal Dead zone (TDZ)<uninitialized>           block
+function expression and arrow -------------------Depends if using var or const/let -----------------------------------------
+
+Temporal Dead zone(TDZ):
+JS throws referenceError: cannot access 'var_name' before initialization
+Why TDZ???
+  * Makes it easier to avoid and catch errors: accessing variable before declaration is bad practice and should be avoided
+  * Makes const variables actually work
+
+why hoisting?
+  * Using functions before actual declaration, like mutual hoisting.
+  * var hoisting is just a byproduct

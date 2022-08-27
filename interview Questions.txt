@@ -1,0 +1,1 @@
+1. How const are reffered as immutable, if the object values can be changed?

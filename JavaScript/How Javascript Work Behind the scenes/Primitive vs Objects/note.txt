@@ -1,0 +1,24 @@
+Primitive(Primitive type):
+  Number
+  String
+  Boolean
+  undefined
+  Null
+  Symbol
+  BigInt
+
+Objects(Reference Type):
+  Object literal
+  Arrays
+  Functions
+  Many more
+
+Primitives:
+  * Are stored in the execution context in the call stack
+  * Identifier:vari_name, address:0001, value: 30
+  * oldAge
+
+Objects:
+  * Stored in Heap
+  * Identifier: vari_name, address: 0003, value: 3D8F(address of a value in heap)
+  * this basically causes the reference type to change all the pointing values
