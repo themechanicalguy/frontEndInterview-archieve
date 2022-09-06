@@ -1,0 +1,7 @@
+There are some data transformation methods:
+
+  1. Map
+  2. Filter
+  3. Reduce
+
+These array methods are called data transformation method as they transform the array into a new array(not reduce) 
