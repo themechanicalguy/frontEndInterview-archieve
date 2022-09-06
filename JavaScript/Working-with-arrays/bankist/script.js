@@ -82,6 +82,36 @@ const displayMovements = function (movements) {
 };
 displayMovements(account1.movements);
 
+// calculate and Display balance: resuce method example
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calcDisplayBalance(account1.movements);
+
+// Chaining of Methods Example
+//  QUEST: What is the issue with chaining and how to handle it? using third parameters of map,filter,reduce
+// can we chain in foreach?
+// dont overuse chaining
+//  it is a bad practise to chain methods that mutates the underlying array. splice, reverse
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumIn.textContent = `${incomes} EUR`;
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumOut.textContent = `${Math.abs(out)} EUR`;
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter((int, i, arr) => int >= 1) //exclude interest below 1
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumInterest.textContent = `${interest} EUR`;
+};
+
+calcDisplaySummary(account1.movements);
 // computing username
 // using forEach because we are creating a side-effect
 const createUsernames = function (accs) {
