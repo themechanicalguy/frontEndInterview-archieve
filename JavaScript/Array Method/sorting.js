@@ -8,7 +8,7 @@
  * we can create a shallow copy with spread operator [...arr] or with slice method (arr.slice())
  */
 // Strings
-const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+const owners = ["Jonas", "Zach", "Adam", "Martha"];
 console.log(owners.sort());
 console.log(owners);
 

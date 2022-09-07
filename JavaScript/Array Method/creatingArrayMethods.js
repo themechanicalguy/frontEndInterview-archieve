@@ -25,7 +25,14 @@ console.log(y);
 
 const z = Array.from({ length: 7 }, (_, i) => i + 1); // creation of array with increasing value
 console.log(z);
+
+//generating 100 dice rolls
+const z = Array.from({ length: 100 }, (_, i) =>
+  Math.trunc(Math.random() * 6 + 1)
+);
 /**
+ * The Array.from() static method creates a new, shallow-copied Array instance from an iterable or array-like object.
+ * Introduced in ES6
  * querySelectorAll will return nodeList which will not have array method(map, filter, reduce, ...).
  * So we will use spread operator or from to create the nodeList to array
  */
