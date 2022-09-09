@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StopWatch</title>
+  </head>
+  <style>
+    body {
+      background-color: rgba(3, 43, 28, 0.4);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .digit {
+      font-size: 120px;
+      font-weight: bold;
+    }
+    .txt {
+      font-size: 120px;
+    }
+    .btn-container {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .btn {
+      padding: 5px 25px;
+      font-size: 15px;
+      color: #fff;
+      border: 0px;
+      background-color: #042020;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div id="time">
+        <!-- <span class="digit" id="hr">00</span>
+        <span class="txt">Hr</span> -->
+        <span class="digit" id="min">00</span>
+        <span class="txt">:</span>
+        <span class="digit" id="sec">00</span>
+        <span class="txt">:</span>
+        <span class="digit" id="count">00</span>
+      </div>
+      <div class="btn-container">
+        <button class="btn" id="start" onclick="start()">Start</button>
+        <button class="btn" id="stop" onclick="stop()">Stop</button>
+        <button class="btn" id="reset" onclick="reset()">reset</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    var min = 0;
+    var sec = 0;
+    var count = 0;
+    var timer = false;
+    function start() {
+      timer = true;
+      stopwatch();
+    }
+    function stop() {
+      timer = false;
+    }
+    function reset() {
+      timer = false;
+      min = 0;
+      sec = 0;
+      count = 0;
+      document.getElementById("count").innerHTML = count
+        .toString()
+        .padStart(2, 0);
+      document.getElementById("min").innerHTML = min.toString().padStart(2, 0);
+      document.getElementById("sec").innerHTML = sec.toString().padStart(2, 0);
+    }
+    function stopwatch() {
+      if (timer === true) {
+        count = count + 1;
+        if (count === 100) {
+          sec = sec + 1;
+          count = 0;
+        }
+        if (sec === 60) {
+          min = min + 1;
+          sec = 0;
+        }
+        document.getElementById("count").innerHTML = count
+          .toString()
+          .padStart(2, 0);
+        document.getElementById("min").innerHTML = min
+          .toString()
+          .padStart(2, 0);
+        document.getElementById("sec").innerHTML = sec
+          .toString()
+          .padStart(2, 0);
+        setTimeout("stopwatch()", 10);
+      }
+    }
+    // let seconds = 00;
+    // let tens = 00;
+    // let appendTens = document.querySelector("#tens");
+    // let appendSeconds = document.querySelector("#seconds");
+    // let start = document.querySelector("#button-start");
+    // let stop = document.querySelector("#button-stop");
+    // let reset = document.querySelector("#button-end");
+  </script>
+</html>

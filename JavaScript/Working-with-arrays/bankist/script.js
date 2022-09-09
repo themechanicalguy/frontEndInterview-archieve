@@ -73,31 +73,55 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const formatMovementDate = function (date, locale) {
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
+
+  const daysPassed = calcDaysPassed(new Date(), date);
+  // console.log(daysPassed);
+
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed <= 7) return `${daysPassed} days ago`;
+  // else {
+  //   const day = `${date.getDate()}`.padStart(2, 0);
+  //   const month = `${date.getMonth() + 1}`.padStart(2, 0);
+  //   const year = date.getFullYear();
+  //   return `${day}/${month}/${year}`;
+  // }
+  return new Intl.DateTimeFormat(locale).format(date);
+};
+
 // display movements
 // DOM MANIPULATIONv
-const displayMovements = function (movements, sort = false) {
+const displayMovements = function (acc, sort = false) {
   // Empty container then add elements
   containerMovements.innerHTML = '';
-  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
-  movs.forEach(function (mov, i) {
+  const movs = sort
+    ? acc.movements.slice().sort((a, b) => a - b)
+    : acc.movements;
+  movs?.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
+    const date = new Date(acc.movementsDates[i]);
+    const displayDate = formatMovementDate(date, acc.locale);
     // Creating Elements to insert in DOM
     const html = `
         <div class="movements__row">
           <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-          <div class="movements__value">${mov}</div>
+    <div class="movements__date">${displayDate}</div>
+          <div class="movements__value">${mov.toFixed(2)}</div>
         </div>`;
     // insertAdjacentHTML not insertAdjacentElement
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
+// displayMovements(account1.movements);
 
 const updateUI = function (acc) {
   // Display movements
-  displayMovements(acc.movements);
+  displayMovements(acc);
 
   // Display balance
   calcDisplayBalance(acc);
@@ -108,9 +132,8 @@ const updateUI = function (acc) {
 
 // calculate and Display balance: resuce method example
 const calcDisplayBalance = function (acc) {
-  const balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  acc.balance = balance;
-  labelBalance.textContent = `${balance} EUR`;
+  acc.balance = acc?.movements?.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance.toFixed(2)} EUR`;
 };
 // calcDisplayBalance(accounts);
 
@@ -119,27 +142,29 @@ const calcDisplayBalance = function (acc) {
 // can we chain in foreach?
 // dont overuse chaining
 //  it is a bad practise to chain methods that mutates the underlying array. splice, reverse
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, curr) => acc + curr, 0);
   labelSumIn.textContent = `${incomes} EUR`;
-  const out = movements
+  const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, curr) => acc + curr, 0);
-  labelSumOut.textContent = `${Math.abs(out)} EUR`;
-  const interest = movements
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)} EUR`;
+  const interest = acc.movements
     .filter(mov => mov > 0)
     .map(deposit => (deposit * 1.2) / 100)
     .filter((int, i, arr) => int >= 1) //exclude interest below 1
     .reduce((acc, curr) => acc + curr, 0);
-  labelSumInterest.textContent = `${interest} EUR`;
+  labelSumInterest.textContent = `${interest.toFixed(2)} EUR`;
 };
-calcDisplaySummary(account1.movements);
+// calcDisplaySummary(account1.movements);
+// FAKE always login
+let currentAccount;
 
 ///////////////////////////////////////
 // Event handlers : Implementing Login
-let currentAccount;
+// let currentAccount;
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
   e.preventDefault();
@@ -157,12 +182,29 @@ btnLogin.addEventListener('click', function (e) {
 
     // Display Movements in UI
     containerApp.style.opacity = 100;
+    // Create current date and time
+    const now = new Date();
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+      // weekday: 'long',
+    };
+    // const locale = navigator.language;
+    // console.log(locale);
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
 
     // Display Balance
-    calcDisplayBalance(currentAccount);
+    // calcDisplayBalance(currentAccount);
 
     // Display Summary
-    calcDisplaySummary(currentAccount.movements);
+    // calcDisplaySummary(currentAccount.movements);
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
@@ -190,6 +232,10 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
+    // Add transfer date
+    currentAccount.movementsDates.push(new Date());
+    receiverAcc.movementsDates.push(new Date());
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -198,11 +244,13 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = Math.floor(+inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
+
+    currentAccount.movementsDates.push(new Date());
 
     // Update UI
     updateUI(currentAccount);
@@ -213,7 +261,7 @@ btnLoan.addEventListener('click', function (e) {
 let sorted = false;
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
-  displayMovements(currentAccount.movements, !sorted);
+  displayMovements(currentAccount, !sorted);
   // negate sort onClick
   sorted = !sorted;
 });
