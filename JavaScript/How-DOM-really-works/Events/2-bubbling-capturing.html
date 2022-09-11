@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Propagation</title>
+  </head>
+  <style>
+    .nav-list {
+      display: flex;
+
+      justify-content: end;
+    }
+    .nav-item {
+      background-color: green;
+      margin: 15px;
+      text-decoration: none;
+      list-style: none;
+      border: 2px solid #000;
+      padding: 18px;
+    }
+    .nav-link {
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <nav class="nav">
+      <ul class="nav-list">
+        <li class="nav-item"><a class="nav-link">Home</a></li>
+        <li class="nav-item"><a class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </body>
+  <script>
+    // generating random number between 0,255 to set rgba color
+    const randomInt = (min, max) =>
+      Math.floor(Math.random() * (max - min + 1) + min);
+    //   calling the randomInt inside rgba
+    const randomColor = () =>
+      `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+    document.querySelector(".nav-link").addEventListener("click", function (e) {
+      this.style.backgroundColor = randomColor();
+      console.log("LINK", e.target, e.currentTarget);
+      //   console.log(e.currentTarget === this);
+
+      // Stop propagation
+      e.stopPropagation();
+    });
+
+    document.querySelector(".nav-item").addEventListener("click", function (e) {
+      this.style.backgroundColor = randomColor();
+      console.log("LIST", e.target, e.currentTarget);
+    });
+
+    document.querySelector(".nav-list").addEventListener("click", function (e) {
+      this.style.backgroundColor = randomColor();
+      console.log("NAV", e.target, e.currentTarget);
+    });
+  </script>
+</html>
+<!-- 
+    NOTES:
+    The standard DOM Events describes 3 phases of event propagation:
+
+    Capturing phase – the event goes down to the element.
+    Target phase – the event reached the target element.
+    Bubbling phase – the event bubbles up from the element.
+
+    * JS Events have Capturing Phase and Bubbling Phase.
+    * Once a user clicks on a button or link , the DOM generates a Click Event. 
+        However it is not generated directly on the target element, instead the event is generated in the root of the document.
+    * From there so called Capturing Phase happens, where the event travels down from the document root in the DOM tree
+         to the target element.
+    * As soon as the event reaches the target, the target phase begins, where events can be handled right at the target
+    * Event Listeners waits for the event to happen, as soon as the event happens it attaches the callback function.
+        This happens in target phase
+    * After reaching the target, the event again travels upward to the Document root. 
+        We say that the event bubbles up to the Document root passing through all its parent element.
+        This is called Event Propagation
+
+
+  Summary
+
+When an event happens – the most nested element where it happens gets labeled as the “target element” (event.target).
+
+    Then the event moves down from the document root to event.target, calling handlers assigned with addEventListener(..., true) on the way (true is a shorthand for {capture: true}).
+    Then handlers are called on the target element itself.
+    Then the event bubbles up from event.target to the root, calling handlers assigned using on<event>, HTML attributes and addEventListener without the 3rd argument or with the 3rd argument false/{capture:false}.
+
+Each handler can access event object properties:
+
+    event.target – the deepest element that originated the event.
+    event.currentTarget (=this) – the current element that handles the event (the one that has the handler on it)
+    event.eventPhase – the current phase (capturing=1, target=2, bubbling=3).
+
+Any event handler can stop the event by calling event.stopPropagation(), but that’s not recommended, because we can’t really be sure we won’t need it above, maybe for completely different things.
+
+The capturing phase is used very rarely, usually we handle events on bubbling. And there’s a logical explanation for that.
+
+In real world, when an accident happens, local authorities react first. They know best the area where it happened. Then higher-level authorities if needed.
+
+The same for event handlers. The code that set the handler on a particular element knows maximum details about the element and what it does. A handler on a particular <td> may be suited for that exactly <td>, it knows everything about it, so it should get the chance first. Then its immediate parent also knows about the context, but a little bit less, and so on till the very top element that handles general concepts and runs the last one.
+
+Bubbling and capturing lay the foundation for “event delegation” – an extremely powerful event handling pattern that we study in the next chapter.
+ -->
