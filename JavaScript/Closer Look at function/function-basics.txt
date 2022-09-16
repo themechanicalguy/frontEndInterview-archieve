@@ -1,0 +1,21 @@
+The JavaScript engine can execute JavaScript code in two different modes:
+
+Immediate mode :
+As soon as the webpage loads on the browser, JavaScript code embedded inside it, executes without any delay.
+Deferred mode :
+Execution of JavaScript code is deferred or delayed until any user action like data input, button click, drop-down selection, etc. takes place.
+
+-> The JavaScript code understood so far was running in immediate mode. As soon as the page is loaded in the browser, 
+the script gets executed line by line without any delay.
+
+-> But in real-world application development, it is not possible to wait for sequential execution of the code written 
+for the huge applications. JavaScript provides a solution to this problem in the form of JavaScript functions.
+
+->Functions are one of the integral components of JavaScript. A JavaScript function is a set of statements that performs a specific task. 
+They become a reusable unit of code.
+
+->In JavaScript, functions are first-class objects. i.e., functions can be passed as an argument to other functions, it can be a return value 
+of another function or can be assigned as a value to a variable. JavaScript leverages this behavior to extend its capabilities.
+
+let addValues = (a=30,b) => a+b;
+console.log(addValues(35));
