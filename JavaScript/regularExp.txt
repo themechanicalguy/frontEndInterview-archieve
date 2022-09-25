@@ -1,4 +1,5 @@
-Suppose you want to validate the data entered by the user in the email field. The user enters data as a string, but an email pattern needs to be validated. 
+Suppose you want to validate the data entered by the user in the email field. 
+The user enters data as a string, but an email pattern needs to be validated. 
 That is, a string consisting of @ and .com 
 
 To achieve this validation, a powerful tool is required for inspecting and processing the strings with a certain pattern. 

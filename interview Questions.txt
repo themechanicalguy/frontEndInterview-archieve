@@ -1,1 +1,9 @@
 1. How const are reffered as immutable, if the object values can be changed?
+Q1 of 3
+
+Which of the given conditions will return TRUE?
+
+null==undefined; TRUE
+null===undefined;
+null=="undefined";
+null==="undefined";
