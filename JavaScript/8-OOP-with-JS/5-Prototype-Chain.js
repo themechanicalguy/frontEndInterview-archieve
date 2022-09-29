@@ -1,3 +1,4 @@
+// Prototypal Inheritance , Prototype Chain ------------------------------------
 const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
@@ -39,9 +40,11 @@ get __proto__: ƒ __proto__()
 set __proto__: ƒ __proto__()
  */
 
+// Object.prototype (top of prototype chain)
 console.log(jonas.__proto__.__proto__.__proto__); //null
 // It is basically the end of prototype chain
 
+// It points back to Person constructor
 console.dir(Person.prototype.constructor);
 /**
  *  Person(firstName, birthYear)
@@ -54,3 +57,23 @@ prototype : {calcAge: ƒ, constructor: ƒ}
 [[Prototype]]: ƒ ()
 [[Scopes]]: Scopes[2]
  */
+
+// QUEST: What is Prototype Chain ?
+
+// ----------------------------------------------------------------------------------
+// Prototypal Inheritance on built-in Objects
+
+const arr = [3, 6, 4, 5, 6, 9, 3];
+console.log(arr.__proto__); //contains all methods
+console.log(arr.__proto__ === Array.prototype); //true
+
+console.log(arr.__proto__.__proto__);
+
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique());
+
+const h1 = document.querySelector("h1");
+console.dir((x) => x + 1);
