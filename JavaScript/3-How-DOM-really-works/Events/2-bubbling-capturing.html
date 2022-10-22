@@ -40,24 +40,33 @@
     const randomColor = () =>
       `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
 
-    document.querySelector(".nav-link").addEventListener("click", function (e) {
-      this.style.backgroundColor = randomColor();
-      console.log("LINK", e.target, e.currentTarget);
-      //   console.log(e.currentTarget === this);
+    document.querySelector(".nav-link").addEventListener(
+      "click",
+      function (e) {
+        this.style.backgroundColor = randomColor();
+        console.log("LINK", e.target, e.currentTarget);
+        //   console.log(e.currentTarget === this);
 
-      // Stop propagation
-      e.stopPropagation();
-    });
+        // Stop propagation
+        // e.stopPropagation();
+      }
+      // true
+    );
 
     document.querySelector(".nav-item").addEventListener("click", function (e) {
       this.style.backgroundColor = randomColor();
       console.log("LIST", e.target, e.currentTarget);
     });
 
-    document.querySelector(".nav-list").addEventListener("click", function (e) {
-      this.style.backgroundColor = randomColor();
-      console.log("NAV", e.target, e.currentTarget);
-    });
+    document.querySelector(".nav-list").addEventListener(
+      "click",
+      function (e) {
+        e.stopPropagation();
+        this.style.backgroundColor = randomColor();
+        console.log("NAV", e.target, e.currentTarget);
+      },
+      true
+    );
   </script>
 </html>
 <!-- 
