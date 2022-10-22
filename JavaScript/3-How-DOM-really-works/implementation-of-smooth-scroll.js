@@ -1,3 +1,6 @@
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('##section--1');
+
 // Button scrolling
 btnScrollTo.addEventListener("click", function (e) {
   const s1coords = section1.getBoundingClientRect();
@@ -5,7 +8,7 @@ btnScrollTo.addEventListener("click", function (e) {
 
   console.log(e.target.getBoundingClientRect());
 
-  console.log("Current scroll (X/Y)", window.pageXOffset, window.pageYOffset);
+  console.log("Current scroll (X/Y)", window.pageXOffset, window.pageYOffset); //to get the current scroll  
 
   console.log(
     "height/width viewport",
