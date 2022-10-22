@@ -13,6 +13,7 @@ const handleHover = function (e) {
   }
 };
 
+// mouseenter event doesn't bubble so we use mouseover event here.
 // nav.addEventListener("mouseover", function (e) {
 //   handleHover(e, 0.5);
 // });
