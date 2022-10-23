@@ -1,3 +1,18 @@
+//Simple getters and setters
+const accounts={
+  owner:'Venkat',
+  movements:[10000,12000,150000],
+  get latest(){
+    return movements.slice(-1).pop();
+  },
+  set latest(mov){
+    this.movements.push(mov);
+  },
+};
+console.log(account.latest);
+account.latest=50;
+console.log(account.movements);
+
 class PersonCl {
   constructor(fullName, birthYear) {
     this.fullName = fullName;
