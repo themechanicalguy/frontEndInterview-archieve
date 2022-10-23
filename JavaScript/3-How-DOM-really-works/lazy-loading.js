@@ -25,6 +25,10 @@ Disadvantages of Lazy loading:
  */
 
 // Lazy loading images
+//HTML code setup:
+
+<img src='img/digital-lazy.jpg' data-src='img/digital.jpg' alt='Computer' class='features_img lazy-img'/>
+
 const imgTargets = document.querySelectorAll("img[data-src]");
 
 const loadImg = function (entries, observer) {
