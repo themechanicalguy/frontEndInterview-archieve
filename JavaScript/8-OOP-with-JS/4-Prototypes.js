@@ -59,6 +59,8 @@ console.log(Person.prototype.isPrototypeOf(jonas)); //true
 console.log(Person.prototype.isPrototypeOf(saurav)); //true
 console.log(Person.prototype.isPrototypeOf(Person)); //false
 
+//Person.prototype is the prototypeOfTheLinkedObject.
+
 // Setting properties on prototype object
 Person.prototype.species = "Homo Sapiens";
 console.log(jonas.species, saurav.species);
