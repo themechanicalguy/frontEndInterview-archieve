@@ -17,7 +17,8 @@ new Promise(function (resolve, reject) {
  * Rejected: async call returned with an error.
  */
 
-// To structure the async code, the async operation will be wrapped in a Promise object and handled using "then".
+// To structure the async code, the async operation will be
+//wrapped in a Promise object and handled using "then".
 var myPromise = new Promise(function (resolve, reject) {
   setTimeout(function () {
     resolve("success");
