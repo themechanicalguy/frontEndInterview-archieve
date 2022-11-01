@@ -7,3 +7,13 @@ null==undefined; TRUE
 null===undefined;
 null=="undefined";
 null==="undefined";
+
+Questions from Exception Handling, Async JavaScript and Modules
+
+Modules:
+1- Why do we use Parcel?
+2- What is hot module replacement?
+3- What is transpiling? And why do we need it.
+4-What is polyfilling?
+5- What are pure functions?
+
