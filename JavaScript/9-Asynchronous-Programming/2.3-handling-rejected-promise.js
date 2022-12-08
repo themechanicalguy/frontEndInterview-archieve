@@ -4,7 +4,7 @@ const getCountryData = function (country) {
   // Country 1
   fetch(`https://restcountries.eu/rest/v2/name/${country}`)
     //.then(resolvedCallback, rejectedCallback)
-    .then(
+    .the n(
       (response) => {
         console.log(response);
 

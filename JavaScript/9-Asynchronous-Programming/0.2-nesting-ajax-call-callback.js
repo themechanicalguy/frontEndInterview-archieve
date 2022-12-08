@@ -7,6 +7,7 @@ const getCountryAndNeighbour = function (country) {
   request.open("GET", `https://restcountries.eu/rest/v2/name/${country}`);
   request.send();
 
+  // Event listener 1
   request.addEventListener("load", function () {
     const [data] = JSON.parse(this.responseText);
     console.log(data);
@@ -24,7 +25,7 @@ const getCountryAndNeighbour = function (country) {
     request2.open("GET", `https://restcountries.eu/rest/v2/alpha/${neighbour}`);
     request2.send();
 
-    //callback hell begins here
+    //Event listener 2 -- callback hell begins here
     request2.addEventListener("load", function () {
       const data2 = JSON.parse(this.responseText);
       console.log(data2);
