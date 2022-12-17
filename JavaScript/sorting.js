@@ -1,5 +1,5 @@
 // let arr = [13, 5, 3, 17, 18];
-// let res = bubbleSort(arr, arr.length);
+// arr.sort((a,b)=>a-b);
 // console.log(res);
 
 // const data = ['t','A','a','B','b'];
