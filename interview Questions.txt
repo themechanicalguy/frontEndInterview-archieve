@@ -1,1 +1,39 @@
 1. How const are reffered as immutable, if the object values can be changed?
+Q1 of 3
+
+Which of the given conditions will return TRUE?
+
+null==undefined; TRUE
+null===undefined;
+null=="undefined";
+null==="undefined";
+
+Questions from Exception Handling, Async JavaScript and Modules
+
+Modules:
+1- Why do we use Parcel?
+2- What is hot module replacement?
+3- What is transpiling? And why do we need it.
+4- What is polyfilling?   
+5- What are pure functions?
+6- What is a JavaScript Module? How is it different from traditional scripts?
+7- What is the difference between named export and default export?
+8- Can you write an example of named export?
+9- How to configure babel?
+10-How to configure Web Pack?
+
+Exception Handling:
+
+1- What are the different ways to handle exceptions in Javascript?
+2- What does finally keyword do? Will finally be executed if there is a return after try block? will try..finally block work without catch?
+3- What is the use of throw keyword?
+3- How to handle exception in setTimeout? Withour using Promise.
+4- how to handle exception in asynchronous code?
+
+Asynchronous JavaScript:
+
+1- What is Synchronous Code in JavaScript?
+2- What is Asynchronous Code in JavaScript?
+3- What is the difference between these 2?
+
+

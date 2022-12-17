@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Count Down Timer</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    div {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+    }
+    p {
+      height: 100px;
+      width: 500px;
+    }
+  </style>
+  <body>
+    <div>
+      <p>Countdown Begins:</p>
+      <p id="timer"></p>
+    </div>
+  </body>
+  <script>
+    // if refresh timer resets
+    const startLogOutTimer = function () {
+      // Set time to 5 minutes
+      let time = 300;
+      const tick = function () {
+        const min = String(Math.trunc(time / 60)).padStart(2, 0);
+        const sec = String(time % 60).padStart(2, 0);
+        // In each call, print the remaining time to UI
+        document.querySelector("#timer").innerHTML = `${min}:${sec}`;
+        // When 0 seconds, stop timer and log out user
+        if (time === 0) {
+          clearInterval(timer);
+        }
+        // Decrease 1s
+        time--;
+      };
+      // Call the timer every second
+      tick();
+      const timer = setInterval(tick, 1000);
+      return timer;
+    };
+    startLogOutTimer();
+
+    // Timer with days difference no effect on refresh
+    // var diff;
+    // const tick = function () {
+    //   let future = new Date("sept 8, 2022 15:46:00").getTime();
+    //   let now = new Date().getTime();
+    //   diff = future - now;
+
+    //   let day = Math.floor(diff / (24 * 60 * 60 * 1000));
+    //   //   console.log(day);
+    //   let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    //   //   console.log(hours);
+    //   let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    //   //   console.log(minutes);
+    //   let secs = Math.floor((diff % (1000 * 60)) / 1000);
+    //   //   console.log(secs);
+    //   document.querySelector(
+    //     "#timer"
+    //   ).innerHTML = `${day}:${hours}:${minutes}:${secs}`;
+    // };
+
+    // setInterval(tick, 1000);
+    // if (diff === 0) {
+    //   clearInterval(tick);
+    // }
+  </script>
+</html>
