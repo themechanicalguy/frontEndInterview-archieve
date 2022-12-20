@@ -15,7 +15,7 @@ Asynchronous:-
 */
 
 console.log("Before For loop execution");
-for (var i = 0; i < 2; i++) {
+for (let i = 0; i < 2; i++) {
   console.log("setTimeout message");
   func1();
   func2();
@@ -39,7 +39,7 @@ function func2() {
  * After For loop execution
  */
 console.log("Before For loop execution");
-for (var i = 0; i < 2; i++) {
+for (let i = 0; i < 2; i++) {
   setTimeout(function () {
     console.log("setTimeout message");
     func1();
