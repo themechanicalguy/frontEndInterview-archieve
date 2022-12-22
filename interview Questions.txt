@@ -35,5 +35,6 @@ Asynchronous JavaScript:
 1- What is Synchronous Code in JavaScript?
 2- What is Asynchronous Code in JavaScript?
 3- What is the difference between these 2?
+4- 
 
 
