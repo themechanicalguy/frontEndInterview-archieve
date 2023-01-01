@@ -1,0 +1,43 @@
+Question 
+
+Exception
+Questions:
+
+1. Why Exception handling is used?
+
+Exception handling is useful for dealing with exceptions that cannot be handled locally. Instead of showing an error status in the program, the exception handler transfers control to where the error can be handled. A function can throw exceptions or can choose to handle exceptions.
+
+2. how many types of exceptions are there in native js?
+Ans: 7
+
+3. Okay, what are the 7 types of exception?
+Ans: 1. RangeError, 2.Reference Error, 3.Syntax Error, 4.TypeError, 5.URIError 6. EvalError 7.InternalError
+
+4. How will you handle a exception? NOT A GOOD SOLUTION
+
+5. Show an example of TypeError: (Dont know)
+Ans: let num = 23, num.toUpperCase();
+
+6. What are the properties of Error Object?
+Ans: 1.Cause, 2.message, 3.name, 
+
+7. Methods in exception handling?
+Ans: toString();
+
+8. A question on Array, can you reassign the length property of array? (Cant be changed)
+
+9. What is the max range that an array can take?
+
+CURRYING
+10. Why would you use currying?
+Currying is helpful when you have to frequently call a function with a fixed argument. Also it is a way of confirmation that all the required arguments are received before calling a curried function
+
+11. what is promisification?
+
+12. Why would you use debouncing and throttling?
+
+13. What is the difference between debouncing and throttling?
+
+14. How do you import all the exports from a module 
+
+15. What are the methods in promise?
