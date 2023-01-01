@@ -4,7 +4,8 @@
  * A container for asynchronously delivered value.
  */
 
-// The constructor of the Promise accepts only one argument, a function with parameters resolve and reject.
+// The constructor of the Promise accepts only one argument, a function with parameters resolve
+// and reject.
 new Promise(function (resolve, reject) {
   //async code here
   //resolve if success, reject if error
@@ -12,7 +13,7 @@ new Promise(function (resolve, reject) {
 
 /**
  A Promise has three states:
- * Pending: the result of the async call is not known yet.
+ * Pending: the result of the async call is not known yet. 
  * Resolved: async call returned with success.
  * Rejected: async call returned with an error.
  */

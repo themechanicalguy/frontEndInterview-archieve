@@ -1,6 +1,7 @@
 /**What is a Callback Function?
  * A callback function is a function that is passed as an argument to another function.
- * Callbacks make sure that a certain function does not execute until another function has already finished execution.
+ * Callbacks make sure that a certain function does not execute until another function has 
+   already finished execution.
  */
 
 // What is Callback hell?

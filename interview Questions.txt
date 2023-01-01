@@ -20,20 +20,21 @@ Modules:
 7- What is the difference between named export and default export?
 8- Can you write an example of named export?
 9- How to configure babel?
-10-How to configure Web Pack?
+10- How to configure Web Pack?
 
-Exception Handling:
 
-1- What are the different ways to handle exceptions in Javascript?
-2- What does finally keyword do? Will finally be executed if there is a return after try block? will try..finally block work without catch?
-3- What is the use of throw keyword?
-3- How to handle exception in setTimeout? Withour using Promise.
-4- how to handle exception in asynchronous code?
-
+=========================================================================
 Asynchronous JavaScript:
+=========================================================================
 
 1- What is Synchronous Code in JavaScript?
 2- What is Asynchronous Code in JavaScript?
 3- What is the difference between these 2?
+4- What is callback and what are its merits and demerits?
+5- What is a Promise? What are its internal Properties?
+6- How to Consume a Promise?
+7- What is the use of .then?
+8- Write code to resolve a promise?
+
 
 
