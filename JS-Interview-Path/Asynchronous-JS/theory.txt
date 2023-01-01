@@ -1,0 +1,150 @@
+=========================================================================
+Asynchronous JavaScript: Promise
+=========================================================================
+
+1- What is Synchronous Code in JavaScript?
+ * Synchronous code are executed line by line.
+ * Each line of code waits for previous line to finish
+ * Long running operations block the code execution. i.e alert()
+
+2- What is Asynchronous Code in JavaScript?
+Asynchronous:-
+* These code is executed after a task that runs in the background finishes.
+* These code is non-blocking.
+* Execution doesn't wait for an asynchronous task to finish its work.
+* Callback function alone doesn't alone make code asynchronous
+
+3- What is callback and what are its merits and demerits?
+ * A callback function is a function that is passed as an argument to another function.
+ * Callbacks make sure that a certain function does not execute until another function has
+   already finished execution.
+ * merits : callback along with event loop helps us execute code asynchronously
+ * demerits: if we nest callback, it forms callback hell or pyramid of doom.
+ * To overcome the disadvantage of callbacks, the concept of Promises was introduced.
+
+4- What is a Promise?
+ * An object that is used as a placeholder for the future result of an asynchronous operation
+ * A container for asynchronously delivered value.
+ * The constructor of the Promise accepts only one argument, a function with parameters resolve and reject.
+
+ syntax for promise:
+    let promise = new Promise(function(resolve, reject) {
+      // executor (the producing code, "singer")
+    });
+
+4.1 - What are some usecases of Promise ? 
+    Some of the real-time situations where you may need to use the JavaScript Asynchronous 
+    code of execution while implementing business logic are:
+
+    * To make an HTTP request call. AJAX Call
+    * To perform any input/output operations.
+    * To deal with client and server communication.
+
+5- How to consume a Promise?
+ * A promise object serves as a link between the executor and the consuming function which would receive the result or error.
+ * we use .then() and .catch() function to consume the promise
+
+ Syntax:
+  promise.then(
+    function(result) { /* handle a successful result */ },
+    function(error) { /* handle an error */ }
+  );
+
+5.1- What happen when a Promise Rejects?
+ * When a promise rejects the control jumps to the closest rejection handler. But if there is none. So the 
+    erroe gets stuck. There is no code to handle it. The script dies with a with a message in the console
+ * The JS engine tracks such rejections and generate a global error in the case. 
+ * We get a unhandledrejection.
+ * If an error occurs and there is no catch then the unhandledrejection handler triggers, gets the
+    event object with the information about the error. so we can do something.
+
+6- What is the use of finally ?
+ * The call .finally() runs always, when the promise is settled: be it resolve or reject.
+ * The idea of finally is to set up a handler for performing cleanup/finalizing after the previous operations are complete.
+ * E.g. stopping loading indicators, closing no longer needed connections, etc.
+ * A finally handler also shouldn’t return anything. If it does, the returned value is silently ignored.
+
+7- What will happen if the finally handler throws an error?
+ *  When finally throws an error, then the execution goes to the nearest error handler.
+
+8- What are Thenables?
+ * In JavaScript, a thenable is an object that has a then() function.
+ * All Promises are thenables, but not all thenables are Promises.
+ * Many Promise patterns, line chaining and async/await, work with any thenables.
+ 
+ Ex:
+ const thenable = {
+  then: function(onFulfilled){
+    setTimeout(()=> onFulfilled(42),10);
+  }
+ };
+ Promise.resolve().then(()=> thenable).then((v)=> v);
+
+ * We can use thenable with await.
+ const v = await thenable;
+ v;
+
+9- Promise: then versus catch
+  Are these code fragments equal? In other words, do they behave the same way in any circumstances, for any handler functions?
+
+  promise.then(f1).catch(f2);
+  Versus:
+
+  promise.then(f1, f2);
+
+10- What happens if we throw and error inside catch() block?
+  * Then the control goes to the next closest error handler. And if we handle the error and finishes 
+    normally, then it continues to the next closest successful .then() handler.
+
+11- What are the static methods available in Promise Class?
+  * There are 6 static methods in Promise class. They are:
+    1- Promise.all()
+    2- Promise.allSettled()
+    3- Promise.race()
+    4- Promise.any()
+    5- Promise.resolve()
+    6- Promise.reject()
+
+12 - Explain Promise.all()!Its syntax and example.
+  * Promise.all() takes an array of Promises(technically it can be any iterable, but is usually an array)
+  * It returns a new Promise.
+  * The new Promise resolves when all listed promises are resolved, and the array of their results become its result.
+  * Syntax: let promise = Promise.all([...promises]);
+  * Ex:
+    Promise.all([
+    new Promise(resolve => setTimeout(() => resolve(1), 3000)), // 1
+    new Promise(resolve => setTimeout(() => resolve(2), 2000)), // 2
+    new Promise(resolve => setTimeout(() => resolve(3), 1000))  // 3
+  ]).then(alert);
+ * Please note that the order of the resulting array members is the same as in its source promises. 
+    Even though the first promise takes the longest time to resolve, it’s still first in the array of results. 
+
+13- Usecase of Promise.all()
+ * Promise.all() is useful anytime you have more than one promise and your code wants to know when all the operations 
+    that those promises represent have finished successfully. It does not matter what the individual async operations are. 
+ * If they are async, are represented by promises and your code wants to know when they have all completed successfully, 
+    then Promise.all() is built to do exactly that.
+ * For example, suppose you need to gather information from three separate remote API calls and when you have the results 
+    from all three API calls, you then need to run some further code using all three results. That situation would be perfect 
+    for Promise.all(). You could so something like this:
+
+    Promise.all([apiRequest(...), apiRequest(...), apiRequest(...)]).then(function(results) {
+        // API results in the results array here
+        // processing can continue using the results of all three API requests
+    }, function(err) {
+        // an error occurred, process the error here
+    });
+
+  * In addition Promise.all() has what is called a "fast fail" implementation. 
+  * It returns a master promise that will reject as soon as the first promise you passed it rejects or it will resolve when all 
+      the promises have resolved. So, to use Promise.all() that type of implementation needs to work for your situation.
+  * There are other situations where you want to run multiple async operations and you need all the results, even if some of them failed. 
+      Promise.all() will not do that for you directly. Instead, you would likely use something like Promise.settle() for that situation. 
+  * You can see an implementation of .settle() here which gives you access to all the results, even if some failed. 
+  * This is particularly useful when you expect that some operations might fail and you have a useful task to pursue with the results 
+      from whatever operations succeeded or you want to examine the failure reasons for all the operations that failed to make decisions 
+      based on that.
+  
+
+
+

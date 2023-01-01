@@ -5,7 +5,7 @@ Synchronous:-
  * Synchronous code are executed line by line.
  * Each line of code waits for previous line to finish
  * Long running operations block the code execution. i.e alert()
- Ex:
+
  
 Asynchronous:-
 * These code is executed after a task that runs in the background finishes.
