@@ -14,3 +14,4 @@
       Object.defineProperty(obj, propertyName, descriptor)
 
 3. How to make an object non-writable?
+  * We can use Object.defineProperty(obj, propertyName, {writable:false}) 
