@@ -144,6 +144,14 @@ Asynchronous:-
   * This is particularly useful when you expect that some operations might fail and you have a useful task to pursue with the results 
       from whatever operations succeeded or you want to examine the failure reasons for all the operations that failed to make decisions 
       based on that.
+
+14- Explain Promise.allSettled()
+  * Promise.allSettled just waits for all promises to settle, regardless of the result. 
+      The resulting array has:
+        {status:"fulfilled", value:result} for successful responses,
+        {status:"rejected", reason:error} for errors.
+
+  
   
 
 

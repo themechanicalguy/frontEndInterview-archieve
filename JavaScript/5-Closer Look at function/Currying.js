@@ -1,11 +1,3 @@
-/**
- * What is Currying?
- * Currying is an advanced technique of working with functions.
- * Currying is a transformation of functions that translates a function from a 
-    callable as f(a)(b)(c).
- * Currying doesn't call a function. It just transforms it.
- */
-
 // Example
 function curry(f) {
   return function (a) {

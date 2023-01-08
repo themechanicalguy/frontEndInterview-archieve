@@ -1,0 +1,17 @@
+1. What are the property flags in Object properties?
+  The object properties have three special attributes(so called "flags") 
+    a. Writable: if true, the value can be changed, otherwise it's read only
+    b. enumerable: if true, then listed in loops, otherwise not listed
+    c. configurable: if true, the property can be deleted and its attributes can be modified.
+
+2. Explain the purpose of Object.getOwnPropertyDescriptor() & Object.defineProperty() ?
+
+  * The method Object.getOwnPropertyDescriptor allows to query the full information about a property.
+    The syntax is:
+      let descriptor = Object.getOwnPropertyDescriptor(obj, propertyName);
+  * To change the flags, we can use Object.defineProperty.
+    The syntax is:
+      Object.defineProperty(obj, propertyName, descriptor)
+
+3. How to make an object non-writable?
+  * We can use Object.defineProperty(obj, propertyName, {writable:false})  

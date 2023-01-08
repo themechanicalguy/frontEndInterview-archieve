@@ -1,0 +1,7 @@
+1- What is currying?
+ * Currying is a function transformation technique.
+ * It transforms functions with multiple arguments and decomposing them into a sequence 
+    of functions with a single argument.
+ * Currying doesn't call a function. It just transforms it.
+
+ Ex:
