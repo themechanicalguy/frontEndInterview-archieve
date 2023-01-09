@@ -1,3 +1,158 @@
+
+
+
+
+ 
+
+
+
+
+
+
+1- What is OOP?
+  * Object-Oriented Programming(OOP) is a PROGRAMMING PARADIGM based on the CONCEPTS OF OBJECTS.
+  * We use object to model real-world or abstract features.
+
+2- What is a Object?
+  * Objects are SELF-CONTAINED block of codes.
+  * They are INSTANCES we create from classes.
+
+3- What is a Class?
+  * Class is a BLUEPRINT to create new Objects.
+
+4- What are the fundamental Principles of OOP?
+  * Abstraction
+  * Encapsulation
+  * Inheritance 
+  * Polymorphism
+
+5- What is Abstraction?
+  * An abstraction is a way of hiding the implementation details and showing only the functionality to the user.
+
+6- What is Encapsulation ?
+ * Encapsulation involves wrapping of data and methods into single unit(a class) and limiting the access of data outside of the class. 
+
+7- What is Inheritance ?
+ * Inheritance is the procedure in which one class inherits the attributes and methods of another class.
+ * The class whose properties and methods are inherited is known as the Parent class. 
+ * And the class that inherits the properties from the parent class is the Child class or Sub class.
+
+8- What is Polymorphism?
+ * Polymorphism mean ‘a property of having many forms.’
+ * In simple terms we can say : A child class can overwrite a method it inherited from a parent class.
+ * It can be implemented by Function overloading and function overriding.
+
+9- What is Prototype in JS? Explain with Example.
+ * In JavaScript all objects are linked to a prototye.
+ * The Prototype Basically contains all the methods and properties that are accessible to all the objects linked to that prototype.
+ * Object inherit properties and method from prototype, that it is linked to.
+ * Ex: const num = [1, 2, 3];
+       num.map((v) => v * 2);
+  -> here in array num, we are able to use map() because Array.prototype has a map method and all arrays created have access to it.
+  -> since array.prototype is the prototype of num array so methods are delegated to nums array(object).
+  -> the map method is not defined in num array itself but on its prototype(Array.prototye)
+
+10- What is the difference between Class based OOP and Prototype based OOP? 
+  * In classical OOP, Objects are instances of class and methods are copied from class to all instances.
+  * While in Prototypal Inheritance or OOP, Behaviour is delegated to the linked prototype Object. They are not copied
+
+11- How do you implement prototype based OOP in JavaScript?
+    How do we actually create Prototypes? And how do we link objects to protoypes?
+    How can we have new Objects without classes?
+  * There are 3 ways to implement Prototypal Inheritance In JavaScript
+    -> Constructor Function
+    -> ES6 classes
+    -> Object.create()
+
+12 - What is Constructor Function?
+  * Constructor Function are very similar to normal fucntion, the only diff is that we write constructor function 
+    using 'new' keyword.
+  * It is a technique to create objects from a function.
+  * This is how built-in objects like Arrays, Maps or Sets are actually implemented.
+
+13- What are ES6 classes?
+  * Modern alternative to constructor function syntax.
+  * It is 'syntatic sugar' behind the scene, ES6 classes work exactly like constructor functions.
+  * ES6 classes do not behave like classes in classical OOP.
+
+14- Explain Object.create() ?
+  * The Object.create() static method creates a new object, 
+    using an existing object as the prototype of the newly created object.
+
+15- Difference between Object.create() and Object.assign()?
+
+16- What is the difference between ES6 classes and constructor function?
+  There are few difference between them:
+  -> Class methods are non-enumerable. A class definition sets enumerable flag to false for all methods in the "prototype".
+    That’s good, because if we for..in over an object, we usually don’t want its class methods.
+  -> Classes always use strict. All code inside the class construct is automatically in strict mode.
+
+17 - What is a Class Expression?
+  * Just like functions, classes can be defined inside another expression, passed around, returned, assigned, etc.
+  Ex: 
+    let User = class {
+      sayHi() {
+      alert("Hello");
+      }
+    };
+
+18 - What is named class expression?
+  * Similar to Named Function Expressions, class expressions may have a name.
+    let User = class MyClass {
+      sayHi() {
+        alert(MyClass); // MyClass name is visible only inside the class
+      }
+    };
+
+    new User().sayHi(); // works, shows MyClass definition
+
+19 - Can we return class in js?
+
+    function makeClass(phrase) {
+      // declare a class and return it
+      return class {
+        sayHi() {
+          alert(phrase);
+        }
+      };
+    }
+
+    // Create a new class
+    let User = makeClass("Hello");
+
+    new User().sayHi(); // Hello
+
+
+
+
+
+16- What is 'new' Keyword?
+  * 'new' keyword in JavaScript is used to create an instance of an object that has a constructor function. 
+  * On calling the constructor function with ‘new’ operator, the following actions are taken:
+    1- A new empty object is created.
+    2- The new object’s internal ‘Prototype’ property (__proto__) is set the same as the prototype of the constructing function.
+    3- The ‘this’ variable is made to point to the newly created object. 
+        It binds the property which is declared with ‘this’ keyword to the new object.
+    4- About the returned value, there are three situations below. 
+        a- If the constructor function returns a non-primitive value (Object, array, etc), the constructor function
+            still returns that value. Which means the new operator won’t change the returned value.
+        b- If the constructor function returns nothing, ‘this’ is return;
+        c- If the constructor function returns a primitive value,  it will be ignored, and ‘this’ is returned.
+    Summary:
+      1. New {} is created
+      2. function is called, this = {}
+      3. {} linked to prototype
+      4. function automatically return {}
+
+17- What is __proto__ ?
+  * It is basically the constructor function that is creating the object
+
+18- What is Prototype Chain?
+  * Every object in JavaScript can be linked to a prototype object which is the mechanism through which inheritance is provided.
+  * The prototype object has prototype of its own and so on until an object is reached with null as its prototype. 
+  * So, this linking with one another is called as prototype chain.
+  * Null has no prototype and it acts as a final link in this prototype chain.
+
 1. What are the property flags in Object properties?
   The object properties have three special attributes(so called "flags") 
     a. Writable: if true, the value can be changed, otherwise it's read only
