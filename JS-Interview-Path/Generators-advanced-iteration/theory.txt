@@ -1,0 +1,15 @@
+1- What is Generator Function?
+  * Regular function returns only one single value or nothing.
+  * Generators can return multiple values one after another, on-demand.
+
+2- Write the synatx to create Generator function?
+  * To create generator we need special syntax construct function* , so called generator function
+      function* generateSequence(){
+        yield 1;
+        yield 2;
+        return 3;
+      }
+
+3- How generator function is defferent than regular function /
+  * When Generator function is called, it doesn’t run its code. 
+  * Instead it returns a special object, called “generator object”, to manage the execution.
