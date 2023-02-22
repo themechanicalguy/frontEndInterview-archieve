@@ -1,0 +1,11 @@
+1-What is Proxy?
+  * Proxy is a JavaScript Object that wraps another object and intercept operations.
+  * It can easily intercept operations like reading/writing and handle it on its own way.
+  * Proxy are used in many libraries and some browser frameworks.
+  * eg: Promise Proxy is used in axios
+
+2- Write the syntax of proxy?
+  * let proxy = new Proxy(target, handler);
+  * ex:
+    let target = {};
+    let proxy = new Proxy(target, {}); //emp
