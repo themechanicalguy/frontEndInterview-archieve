@@ -1,0 +1,20 @@
+1. What is Generator?
+Regular functions return only one, single value (or nothing).
+
+2. Why Generator?
+Generators can return (“yield”) multiple values, one after another, on-demand. They work great with iterables, allowing to create data streams with ease.
+
+3. Behaviour:
+Generator functions behave differently from regular ones. When such function is called, it doesn’t run its code. Instead it returns a special object, called “generator object”, to manage the execution.
+
+4. .next function of Generator? 
+See Generator.js file for more info
+
+5. will generator repeat itself or end after returning?
+New calls to generator.next() don’t make sense any more. If we do them, they return the same object: {done: true}.
+
+6. Syntax: function* f(…) or function *f(…)?
+Both are fine but the first one is preferred
+
+7. Generators are Iterable?
+CHeck if the code in Generator.js is Iterable.
