@@ -36,5 +36,16 @@ Asynchronous JavaScript:
 7- What is the use of .then?
 8- Write code to resolve a promise?
 
+============================================================================
+JavaScript Fundamentals & Behind the Scene
+============================================================================
+
+1- What is scope ? Different types of Scope in JavaScript? 
+2- What is scope chain?
+3- What is Lexical Scoping?
+4- What is call stack?
+5- What is this keyword?
+
+
 
 
