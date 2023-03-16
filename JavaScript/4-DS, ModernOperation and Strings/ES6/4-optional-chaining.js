@@ -1,5 +1,5 @@
 // DEFINE: The optional chaining ?. is a safe way to access nested object properties,
-//          even if an intermediate property doesn’t exist.
+// even if an intermediate property doesn’t exist.
 
 /**
  * IMP: The “non-existing property” problem
@@ -33,7 +33,7 @@ alert(user?.address?.street); // undefined (no error)
 // For example, if according to our code logic user object must exist,
 //  but address is optional, then we should write user.address?.street, but not user?.address?.street.
 // Then, if user happens to be undefined, we’ll see a programming error about it and fix it.
-//     Otherwise, if we overuse ?., coding errors can be silenced where not appropriate, and become more difficult to debug.
+//  Otherwise, if we overuse ?., coding errors can be silenced where not appropriate, and become more difficult to debug.
 // The variable before ?. must be declared
 
 /**
@@ -50,7 +50,6 @@ alert(x); // 0, value not incremented
 
 /**
  * Summary
-
 The optional chaining ?. syntax has three forms:
 
     obj?.prop – returns obj.prop if obj exists, otherwise undefined.

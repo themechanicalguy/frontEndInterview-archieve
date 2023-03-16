@@ -1,4 +1,5 @@
-// A "symbol" represents a unique identifier. You can make use of Symbol() to generate a value of this type.
+// A "symbol" represents a unique identifier.
+// You can make use of Symbol() to generate a value of this type.
 // EXAMPLE:
 let empid = Symbol();
 
