@@ -65,7 +65,24 @@ JavaScript Fundamentals & Behind the Scene
 21- What is structured clone?
 22- What is garbage collection ? What is the algo used in google v8?
 23- What is Optional Chaining ? Explain with example.
-24- 
+
+=====================================================================
+Functions
+===================================================================
+
+1- What is an Function Expression?
+2- What is Functions declaration ?
+3- What is first class function ?
+4- What are Higher Order Function ? Explain with example.
+5- What are pura function ? Explain with ex.
+6- What is arrow fucntion ? 
+7 - What are callbacks ? Explain with example.
+8- Explain call, apply, bind methods with example .
+9- What is IIFE ? Explain with example ?
+10 - What are closures ? Explain with example. 
+11- What is currying ? explain with example.
+12 - What will be output for closure concept. Find question from google
+
 
 
 

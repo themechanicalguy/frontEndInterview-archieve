@@ -1,10 +1,14 @@
-'use strict';
+"use strict";
+
+/*=====================================================================
+JONAS
+=========================================================================*/
 // Call and Apply Method
 /** Ways to set this keyword manually */
 
 const lufthansa = {
-  airline: 'Lufthansa',
-  iataCode: 'LH',
+  airline: "Lufthansa",
+  iataCode: "LH",
   bookings: [],
   //
   //Enhanced object literal:::
@@ -17,12 +21,12 @@ const lufthansa = {
   },
 };
 
-lufthansa.book(239, 'Zesova de Lucus');
-lufthansa.book(635, 'John Smith');
+lufthansa.book(239, "Zesova de Lucus");
+lufthansa.book(635, "John Smith");
 
 const eurowings = {
-  airline: 'Eurowings',
-  iataCode: 'EW',
+  airline: "Eurowings",
+  iataCode: "EW",
   bookings: [],
 };
 /**
@@ -43,26 +47,26 @@ const book = lufthansa.book; //As it is a First class function
  * And all the arguments after the first one is the arguments of the original function
  */
 // Call method
-book.call(eurowings, 23, 'Sarah Williams'); // here the this is pointing to eurowings manually
+book.call(eurowings, 23, "Sarah Williams"); // here the this is pointing to eurowings manually
 console.log(eurowings);
 
-book.call(lufthansa, 239, 'Mary cooper'); // here the this is pointing to lufthansa manually
+book.call(lufthansa, 239, "Mary cooper"); // here the this is pointing to lufthansa manually
 console.log(lufthansa);
 
 const swiss = {
-  airline: 'Swiss Air Lines',
-  iataCode: 'LX',
+  airline: "Swiss Air Lines",
+  iataCode: "LX",
   bookings: [],
 };
 
-book.call(swiss, 583, 'Mary Cooper');
+book.call(swiss, 583, "Mary Cooper");
 console.log(swiss);
 /** The only thing to notice is that the objects should have same format */
 
 /** Apply does not receive a list of arguments but it will recieve an array and pass it into the function */
 
 //Apply Method
-const flightData = [583, 'George Cooper'];
+const flightData = [583, "George Cooper"];
 book.apply(swiss, flightData); // takes in the array of the arguments
 console.log(swiss);
 // SO AFTER THE INTRODUCTION OF SPREAD OPERATOR APPLY IS NOT OF MUCH USE::: AS THIS WILL HAPPEN:
