@@ -1,0 +1,224 @@
+0- What is Variable shadowing
+
+ans: Now, when a variable is declared in a certain scope having the same name defined on its outer scope and when we call the variable from the inner scope, the value assigned to the variable in the inner scope is the value that will be stored in the variable in the memory space. This is known as Shadowing or Variable
+example: 
+function func() {
+    let a = 'Geeks';
+     
+    if (true) {
+        let a = 'GeeksforGeeks';  // New value assigned
+        console.log(a);
+    }
+     
+    console.log(a);
+}
+func();
+
+0a- Illegal Shadowing: 
+Now, while shadowing a variable, it should not cross the boundary of the scope, i.e. we can shadow var variable by let variable but cannot do the opposite. So, if we try to shadow let variable by var variable, it is known as Illegal Shadowing and it will give the error as “variable is already defined.” 
+
+function func() {
+    var a = 'Geeks';
+    let b = 'Geeks;
+     
+    if (true) {
+        let a = 'GeeksforGeeks'; 
+        var b = 'Geeks';
+        console.log(a); 
+        console.log(b); 
+    }
+}
+func();
+
+1- What is scope ? Different types of Scope in JavaScript? 
+  JavaScript has 3 types of scope: Block scope. Function scope. Global scope.
+  Block Scope: 
+    Variables declared inside a { } block cannot be accessed from outside the block: (It is false for var declared variable)
+    Variables declared with the var keyword can NOT have block scope.
+
+  Function Scope
+    JavaScript has function scope: Each function creates a new scope.
+    Variables defined inside a function are not accessible (visible) from outside the function.
+    Variables declared with var, let and const are quite similar when declared inside a function.
+
+2- What is scope chain?
+    To understand the scope chain you must know how closures work.
+    A closure is formed when you nest functions, inner functions can refer to the variables present in their outer enclosing functions even after their parent functions have already executed.
+    JavaScript resolves identifiers within a particular context by traversing up the scope chain, moving from locally to globally.
+
+3- What is Lexical Scoping?
+    Lexical scope is the ability for a function scope to access variables from the parent scope. We call the child function to be lexically bound by that of the parent function
+
+4- What is call stack?
+      A call stack is a mechanism for an interpreter (like the JavaScript interpreter in a web browser) to keep track of its place in a script that calls multiple functions — what function is currently being run and what functions are called from within that function, etc.
+
+      When a script calls a function, the interpreter adds it to the call stack and then starts carrying out the function.
+      Any functions that are called by that function are added to the call stack further up, and run where their calls are reached.
+      When the current function is finished, the interpreter takes it off the stack and resumes execution where it left off in the last code listing.
+      If the stack takes up more space than it was assigned, a "stack overflow" error is thrown.
+
+5- What is this keyword? Explain how it behaves based on different situations?
+    In JavaScript, the "this" keyword refers to the object that is currently executing a piece of code. It is a reference to the current context or scope of the code being executed.
+
+    The behavior of the "this" keyword can vary based on how and where it is used within a piece of code. Here are some common scenarios:
+
+    Global scope: In the global scope, the value of "this" is the global object (window in a web browser, or global in Node.js).
+
+    Object method: When the "this" keyword is used inside an object method, it refers to the object that the method is a property of. For example:
+
+    javascript
+    Copy code
+    const person = {
+      firstName: "John",
+      lastName: "Doe",
+      fullName: function() {
+        return this.firstName + " " + this.lastName;
+      }
+    };
+
+    console.log(person.fullName()); // Output: "John Doe"
+    In the above example, when the fullName method is called on the person object, the value of "this" inside the method refers to the person object.
+
+    Function invocation: When a function is called without any context object, the value of "this" inside the function will be the global object (or undefined in strict mode). For example:
+    scss
+    Copy code
+    function myFunction() {
+      console.log(this);
+    }
+
+    myFunction(); // Output: Window object (in a browser) or global object (in Node.js)
+    Call, apply, and bind methods: The "call", "apply", and "bind" methods can be used to set the value of "this" explicitly when calling a function. For example:
+    javascript
+    Copy code
+    const person = {
+      firstName: "John",
+      lastName: "Doe"
+    };
+
+    function fullName() {
+      return this.firstName + " " + this.lastName;
+    }
+
+    console.log(fullName.call(person)); // Output: "John Doe"
+    In the above example, the call method is used to invoke the fullName function with the person object as the value of "this".
+
+    Understanding the behavior of the "this" keyword is an important part of writing effective and maintainable JavaScript code.    
+
+9- What is destructuring assignment? Explain with example.
+
+
+    9a: how will destructure an object and store it in different variable?
+
+10- What is Spread Operator? Explain with example.
+    9a. Is there a difference between array and object destructuring?
+
+11- Can we use spread operator inside template literals?
+
+    11a: Can you put a for loop in a template literal?
+12- What is rest parameters ? Explain with example.
+13- Difference between rest parameters and the arguments object ?
+
+ 
+
+14- How many data types are there in JS and What are they?
+    primitive: Null, undefined, boolean, number, bigint, string, symbol
+
+    14a, difference btw null and undefined
+    ans: undefined indicates the absence of a value, while null indicates the absence of an object
+
+    14B: What is the solution of this:
+      console.log(42 / +0); 
+      console.log(42 / -0); 
+      // Infinity
+      // -Infinity
+
+15- How to delete a property from an object?
+    using delete operator
+    15a, need an example create an object with 3 properties and remove 2 of them,
+
+16- How to definw a multi word property name in an object?
+    2 ways: 
+    Multiword property names can be written in camel case just as the property bodyType is written in the above example. On the other hand, multiword property names that cannot be written in camel case, are instead enclosed within quotes,
+
+17- What is the difference between dot operator and square bracket operator way of accessing objects?
+    The dot notation is used mostly as it is easier to read and comprehend and also less verbose. The main difference between dot notation and bracket notation is that the bracket notation allows us to access object properties using variable.
+
+
+18- What is the use of 'in' operator ?
+    The JavaScript in operator is used to check if a specified property exists in an object or in its inherited properties (in other words, its prototype chain). The in operator returns true if the specified property exists.
+
+19- What is 'for..in' loop?
+    The for...in statement iterates over all enumerable string properties of an object (ignoring properties keyed by symbols), including inherited enumerable properties.
+
+20- Are objects ordered ? If we loop over an object do we get all properties in the same order they were added?
+    They are not ordered
+    20a. Prove your statemeent?
+      create an array and object push an array element say key in object and create new property for same key and then use Object.keys to get the value
+
+6- What are the different ways to copy object?
+    3 ways
+    Use the spread (...) syntax
+    Use the Object.assign() method
+    Use the JSON.stringify() and JSON.parse()
+    Use Structured clone
+
+    Will JSON.stringify works fine: 
+    let cop = {
+        a : {
+            b: 'venkat',
+        }
+    }
+    undefined
+    cop.d =a;
+
+7- What is shallow copy and deep copy?
+
+8- What is the use of Object.assign() ?
+
+21- What is structured clone?
+    21a: you can use JSON.parse, JSON.stringify, can't you?
+
+22- What is garbage collection ? What is the algo used in google v8?
+
+23- What is Optional Chaining ? Explain with example.
+    Optional chaining is a process for querying and calling properties, methods, and subscripts on an optional that might currently be nil . If the optional contains a value, the property, method, or subscript call succeeds; if the optional is nil , the property, method, or subscript call returns nil .
+
+ 
+
+=====================================================================
+Functions
+===================================================================
+
+ 
+
+1- What is an Function Expression?
+  A function expression is very similar to, and has almost the same syntax as, a function declaration. The main difference between a function expression and a function declaration is the function name, which can be omitted in function expressions to create anonymous functions. A function expression can be used as an IIFE (Immediately Invoked Function Expression) which runs as soon as it is defined. See also the chapter about functions for more information.
+
+2- What is Functions declaration ?
+  The function declaration defines a function with the specified parameters.
+  You can also define functions using the Function constructor and a function expression.
+
+3- What is first class function ?
+  Language is said to have First-class functions when functions in that language are treated like any other variable. For example, in such a language, a function can be passed as an argument to other functions, can be returned by another function and can be assigned as a value to a variable.
+
+4- What are Higher Order Function ? Explain with example.
+  Basically, a function which takes another function as an argument or returns a function is known as a higher order function. Let's deep dive a bit to see both types of implementation, that is: Passing a function as an argument to another function. Returning a function from another function.
+
+5- What are pura function ? Explain with ex.
+  A pure function in JavaScript is a function that returns the same result if the same arguments(input) are passed in the function. Let's see what makes a function pure in detail: The return value of the function on the function call should only be dependent on the input function arguments.
+
+6- What is arrow fucntion ? 
+  Arrow functions are anonymous functions (the functions without a name and not bound with an identifier). They don't return any value and can declare without the function keyword. Arrow functions cannot be used as the constructors. The context within the arrow functions is lexically or statically defined.
+  In regular JavaScript functions, arguments keywords can be used to access the passed arguments when the function is invoked. But, arrow functions do not have their own arguments and it uses the arguments from the outer function.
+
+7 - What are callbacks ? Explain with example.
+A JavaScript callback is a function which is to be executed after another function has finished execution. A more formal definition would be - Any function that is passed as an argument to another function so that it can be executed in that other function is called as a callback function.
+
+8- Explain call, apply, bind methods with example .
+Call, apply, and bind methods: The "call", "apply", and "bind" methods can be used to set the value of "this" explicitly when calling a function. For example:
+
+9- What is IIFE ? Explain with example ?
+  What is an IIFE? An IIFE (Immediately Invoked Function Expression) is a function that runs the moment it is invoked or called in the JavaScript event loop. Having a function that behaves that way can be useful in certain situations. IIFEs prevent pollution of the global JS scope
+
+10 - What are closures ? Explain with example.
+  A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives you access to an outer function's scope from an inner function.
