@@ -42,15 +42,15 @@ JavaScript Fundamentals & Behind the Scene
 
 0- Variable shadowing
 1- What is scope ? Different types of Scope in JavaScript? 
-2- What is scope chain?
+2- What is scope chain? //explain properly
 3- What is Lexical Scoping?
 4- What is call stack?
 5- What is this keyword? Explain how it behaves based on different situations?
-9- What is destructuring assignment? Explain with example.
-10- What is Spread Operator? Explain with example.
+9- What is destructuring assignment? Explain with example. //explain properly, with parameter
+10- What is Spread Operator? Explain with example.  //explain properly, with parameter
 11- Can we use spread operator inside template literals? 
 12- What is rest parameters ? Explain with example.
-13- Difference between rest parameters and the arguments object ?
+13- Difference between rest parameters and the arguments object ? //failed
 
 14- How many data types are there in JS and What are they?
 15- How to delete a property from an object?
@@ -58,11 +58,11 @@ JavaScript Fundamentals & Behind the Scene
 17- What is the difference between dot operator and square bracket operator way of accessing objects?
 18- What is the use of 'in' operator ?
 19- What is 'for..in' loop?
-20- Are objects ordered ? If we loop over an object do we get all properties in the same order they were added?
+20- Are objects ordered ? If we loop over an object do we get all properties in the same order they were added? //failed
 6- What are the different ways to copy object?
-7- What is shallow copy and deep copy?
+7- What is shallow copy and deep copy? //failed
 8- What is the use of Object.assign() ?
-21- What is structured clone?
+21- What is structured clone? //failed
 22- What is garbage collection ? What is the algo used in google v8?
 23- What is Optional Chaining ? Explain with example.
 
@@ -84,7 +84,21 @@ Functions
 12 - What will be output for closure concept. Find question from google
 
 
+let a = {
+  b: {
+    c: {
+      d: '1'
+    }
+  }
+}
 
+a.c = a.b;
+a.b.b = a.b;
+
+let clone1 = structuredClone(a);
+let clone2 = JSON.parse(JSON.stringify(a));
+console.log(clone1);
+console.log(clone2);
 
 
 
