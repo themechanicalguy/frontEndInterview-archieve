@@ -36,5 +36,69 @@ Asynchronous JavaScript:
 7- What is the use of .then?
 8- Write code to resolve a promise?
 
+============================================================================
+JavaScript Fundamentals & Behind the Scene
+============================================================================
+
+0- Variable shadowing
+1- What is scope ? Different types of Scope in JavaScript? 
+2- What is scope chain? //explain properly
+3- What is Lexical Scoping?
+4- What is call stack?
+5- What is this keyword? Explain how it behaves based on different situations?
+9- What is destructuring assignment? Explain with example. //explain properly, with parameter
+10- What is Spread Operator? Explain with example.  //explain properly, with parameter
+11- Can we use spread operator inside template literals? 
+12- What is rest parameters ? Explain with example.
+13- Difference between rest parameters and the arguments object ? //failed
+
+14- How many data types are there in JS and What are they?
+15- How to delete a property from an object?
+16- How to definw a multi word property name in an object?
+17- What is the difference between dot operator and square bracket operator way of accessing objects?
+18- What is the use of 'in' operator ?
+19- What is 'for..in' loop?
+20- Are objects ordered ? If we loop over an object do we get all properties in the same order they were added? //failed
+6- What are the different ways to copy object?
+7- What is shallow copy and deep copy? //failed
+8- What is the use of Object.assign() ?
+21- What is structured clone? //failed
+22- What is garbage collection ? What is the algo used in google v8?
+23- What is Optional Chaining ? Explain with example.
+
+=====================================================================
+Functions
+===================================================================
+
+1- What is an Function Expression?
+2- What is Functions declaration ?
+3- What is first class function ?
+4- What are Higher Order Function ? Explain with example.
+5- What are pura function ? Explain with ex.
+6- What is arrow fucntion ? 
+7 - What are callbacks ? Explain with example.
+8- Explain call, apply, bind methods with example .
+9- What is IIFE ? Explain with example ?
+10 - What are closures ? Explain with example. 
+11- What is currying ? explain with example.
+12 - What will be output for closure concept. Find question from google
+
+
+let a = {
+  b: {
+    c: {
+      d: '1'
+    }
+  }
+}
+
+a.c = a.b;
+a.b.b = a.b;
+
+let clone1 = structuredClone(a);
+let clone2 = JSON.parse(JSON.stringify(a));
+console.log(clone1);
+console.log(clone2);
+
 
 
