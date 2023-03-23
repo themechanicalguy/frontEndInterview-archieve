@@ -1,0 +1,328 @@
+1-
+DOM children - https://javascript.info/dom-navigation
+importance: 5
+Look at this page:
+
+<html>
+<body>
+  <div>Users:</div>
+  <ul>
+    <li>John</li>
+    <li>Pete</li>
+  </ul>
+</body>
+</html>
+For each of the following, give at least one way of how to access them:
+
+The <div> DOM node?
+The <ul> DOM node?
+The second <li> (with Pete)?
+
+2-
+The sibling question
+importance: 5
+If elem – is an arbitrary DOM element node…
+
+Is it true that elem.lastChild.nextSibling is always null?
+Is it true that elem.children[0].previousSibling is always null ?
+
+Ans: 
+Yes, true. The element elem.lastChild is always the last one, it has no nextSibling.
+No, wrong, because elem.children[0] is the first child among elements. But there may exist non-element nodes before it. So previousSibling may be a text node.
+Please note: for both cases if there are no children, then there will be an error.
+
+If there are no children, elem.lastChild is null, so we can’t access elem.lastChild.nextSibling. And the collection elem.children is empty (like an empty array []).
+
+3-
+Select all diagonal cells
+importance: 5
+Write the code to paint all diagonal table cells in red.
+
+You’ll need to get all diagonal <td> from the <table> and paint them using the code:
+
+// td should be the reference to the table cell
+td.style.backgroundColor = 'red';
+
+4-
+Count descendants: https://javascript.info/basic-dom-node-properties
+importance: 5
+There’s a tree structured as nested ul/li.
+
+Write the code that for each <li> shows:
+
+What’s the text inside it (without the subtree)
+The number of nested <li> – all descendants, including the deeply nested ones.
+
+5-
+What's in the nodeType? : https://javascript.info/basic-dom-node-properties
+importance: 5
+What does the script show?
+
+<html>
+
+<body>
+  <script>
+    alert(document.body.lastChild.nodeType);
+  </script>
+</body>
+
+</html>
+
+6- https://javascript.info/dom-attributes-and-properties
+Write the code to select the element with data-widget-name attribute from the document and to read its value.
+
+<!DOCTYPE html>
+<html>
+<body>
+
+  <div data-widget-name="menu">Choose the genre</div>
+
+  <script>
+    /* your code */
+  </script>
+</body>
+</html>
+
+Ans:
+
+  <script>
+    // getting it
+    let elem = document.querySelector('[data-widget-name]');
+
+    // reading the value
+    alert(elem.dataset.widgetName);
+    // or
+    alert(elem.getAttribute('data-widget-name'));
+  </script>
+
+7- https://javascript.info/dom-attributes-and-properties
+  Make external links orange
+importance: 3
+Make all external links orange by altering their style property.
+
+A link is external if:
+
+Its href has :// in it
+But doesn’t start with http://internal.com.
+Example:
+
+<a name="list">the list</a>
+<ul>
+  <li><a href="http://google.com">http://google.com</a></li>
+  <li><a href="/tutorial">/tutorial.html</a></li>
+  <li><a href="local/path">local/path</a></li>
+  <li><a href="ftp://ftp.com/my.zip">ftp://ftp.com/my.zip</a></li>
+  <li><a href="http://nodejs.org">http://nodejs.org</a></li>
+  <li><a href="http://internal.com/test">http://internal.com/test</a></li>
+</ul>
+
+<script>
+  // setting style for a single link
+  let link = document.querySelector('a');
+  link.style.color = 'orange';
+</script>
+
+Ans:
+
+let links = document.querySelectorAll('a');
+
+for (let link of links) {
+  let href = link.getAttribute('href');
+  if (!href) continue; // no attribute
+
+  if (!href.includes('://')) continue; // no protocol
+
+  if (href.startsWith('http://internal.com')) continue; // internal
+
+  link.style.color = 'orange';
+}
+
+---------------------------------------------------------------------------------------------------------------
+DOM MANIPULATION - https://javascript.info/modifying-document
+---------------------------------------------------------------------------------------------------------------
+
+8- createTextNode vs innerHTML vs textContent
+importance: 5
+We have an empty DOM element elem and a string text.
+
+Which of these 3 commands will do exactly the same?
+
+elem.append(document.createTextNode(text))
+elem.innerHTML = text
+elem.textContent = text
+
+9-
+Clear the element
+importance: 5
+Create a function clear(elem) that removes everything from the element.
+
+<ol id="elem">
+  <li>Hello</li>
+  <li>World</li>
+</ol>
+
+<script>
+  function clear(elem) { /* your code */ }
+
+  clear(elem); // clears the list
+</script>
+
+Ans: 
+function clear(elem) {
+  elem.innerHTML = '';
+}
+
+10-
+Why does "aaa" remain?
+importance: 1
+In the example below, the call table.remove() removes the table from the document.
+
+But if you run it, you can see that the text "aaa" is still visible.
+
+Why does that happen?
+
+<table id="table">
+  aaa
+  <tr>
+    <td>Test</td>
+  </tr>
+</table>
+
+<script>
+  alert(table); // the table, as it should be
+
+  table.remove();
+  // why there's still "aaa" in the document?
+</script>
+
+Ans:
+The HTML in the task is incorrect. That’s the reason of the odd thing.
+
+The browser has to fix it automatically. But there may be no text inside the <table>: according to the spec only table-specific tags are allowed. So the browser shows "aaa" before the <table>.
+
+Now it’s obvious that when we remove the table, it remains.
+
+The question can be easily answered by exploring the DOM using the browser tools. You’ll see "aaa" before the <table>.
+
+The HTML standard specifies in detail how to process bad HTML, and such behavior of the browser is correct.
+
+11- ----IMP
+
+Write an interface to create a list from user input.
+
+For every list item:
+
+Ask a user about its content using prompt.
+Create the <li> with it and add it to <ul>.
+Continue until the user cancels the input (by pressing Esc or via an empty entry).
+All elements should be created dynamically.
+
+If a user types HTML-tags, they should be treated like a text.
+
+12-
+
+Create a tree from the object
+importance: 5
+Write a function createTree that creates a nested ul/li list from the nested object.
+
+For instance:
+
+let data = {
+  "Fish": {
+    "trout": {},
+    "salmon": {}
+  },
+
+  "Tree": {
+    "Huge": {
+      "sequoia": {},
+      "oak": {}
+    },
+    "Flowering": {
+      "apple tree": {},
+      "magnolia": {}
+    }
+  }
+};
+The syntax:
+
+let container = document.getElementById('container');
+createTree(container, data); // creates the tree in the container
+The result (tree) should look like this:
+
+Choose one of two ways of solving this task:
+
+Create the HTML for the tree and then assign to container.innerHTML.
+Create tree nodes and append with DOM methods.
+Would be great if you could do both.
+
+P.S. The tree should not have “extra” elements like empty <ul></ul> for the leaves.
+
+13-
+
+There’s a tree organized as nested ul/li.
+
+Write the code that adds to each <li> the number of its descendants. Skip leaves (nodes without children).
+
+14-
+
+Create a calendar
+importance: 4
+Write a function createCalendar(elem, year, month).
+
+The call should create a calendar for the given year/month and put it inside elem.
+
+The calendar should be a table, where a week is <tr>, and a day is <td>. The table top should be <th> with weekday names: the first day should be Monday, and so on till Sunday.
+
+For instance, createCalendar(cal, 2012, 9) should generate in element cal the following calendar:
+
+
+P.S. For this task it’s enough to generate the calendar, should not yet be clickable.
+
+15-
+
+Colored clock with setInterval
+importance: 4
+Create a colored clock like here:
+
+
+Use HTML/CSS for the styling, JavaScript only updates time in elements.
+
+16-
+
+Insert the HTML in the list
+importance: 5
+Write the code to insert <li>2</li><li>3</li> between two <li> here:
+
+<ul id="ul">
+  <li id="one">1</li>
+  <li id="two">4</li>
+</ul>
+
+17-
+
+Sort the table
+importance: 5
+There’s a table:
+
+<table>
+<thead>
+  <tr>
+    <th>Name</th><th>Surname</th><th>Age</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>John</td><td>Smith</td><td>10</td>
+  </tr>
+  <tr>
+    <td>Pete</td><td>Brown</td><td>15</td>
+  </tr>
+  <tr>
+    <td>Ann</td><td>Lee</td><td>5</td>
+  </tr>
+  <tr>
+    <td>...</td><td>...</td><td>...</td>
+  </tr>
+</tbody>
+</table>
