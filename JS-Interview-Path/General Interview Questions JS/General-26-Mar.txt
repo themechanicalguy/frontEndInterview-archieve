@@ -1,0 +1,23 @@
+DOM: 
+
+
+
+1- What is the difference between Window and document ?
+2- Difference between window.onload and document.onload ?
+3- What are different ways to get an element from DOM ? Whta is fastest way ?
+4- Why querySelectorAll() is slower than getElementByClassName and getElementById ?
+5- How could you verify one element is child of another ?
+6- What is event bubbling and event capturing ?
+6.1- What is the difference between event.target and event.currentTarget ?
+6.2- How could you run event handlers in the capturing phase not in bubbling phase ?
+6.3- How could you prevent multiple event handler to be fired for an event ?
+6.4- What is a cancelable event ?
+6.5- preventDefault() vs stoppropagation vs stopImmediatePropagation ?  
+6.6- What does window.getComputedStyle() do ?
+6.7- How to find all images in DOM, including background-images?
+7- What is Event Delegation ?
+8- What is Lazy Loading ? How is it implemented ?
+9- What is Intersection Observer API ?
+9.1- What is Mutation Observer() ?
+10- What are the different way to add script in our document ?
+11- How async and defer attributes are different on script loading ?
