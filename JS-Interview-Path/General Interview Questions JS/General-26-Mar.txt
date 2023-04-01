@@ -1,0 +1,311 @@
+DOM: 
+
+
+
+1- What is the difference between Window and document ?
+  Document Object: The document object represent a web page that is loaded in the browser. By accessing the document object, we can access the element in the HTML page. With the help of document objects, we can add dynamic content to our web page. The document object can be accessed with a window.document or just document.
+
+  Window Object: The window object is the topmost object of the DOM hierarchy. It represents a browser window or frame that displays the contents of the webpage. Whenever a window appears on the screen to display the contents of the document, the window object is created. 
+
+2- Difference between window.onload and document.onload ?
+The main difference between window.onload and document.onload is that window.onload waits for all the content (including images, CSS, scripts, etc.) to load before executing the code inside it. On the other hand, document.onload gets fired prior to loading of images and other external content
+
+3- What are different ways to get an element from DOM ? Whta is fastest way ?
+There are several ways to get an element from DOM using JavaScript. Here are some of them:
+
+    1/getElementById() method: This method allows you to retrieve an element from the DOM using the element’s ID. If no element exists in the DOM with the supplied ID, null will be returned instead.
+    2.querySelector() method: This method allows you to retrieve an element from the DOM using a CSS selector. It returns the first element that matches the selector.
+    3.getElementsByClassName() method: This method allows you to retrieve an array of elements from the DOM using a class name.
+    4.getElementsByTagName() method: This method allows you to retrieve an array of elements from the DOM using a tag name.
+    5.querySelectorAll() method: This method allows you to retrieve an array of elements from the DOM using a CSS selector.
+
+3a. what is the fastest way?
+    The fastest way to get an element from DOM depends on your use case and requirements. If you want to retrieve an element by its ID, then getElementById() method is the fastest way. If you want to retrieve an element using a CSS selector, then querySelector() method is the fastest way.
+3b. Which is the best way?
+    Both getElementById() and querySelector() methods are considered to be the fastest way to get an element from DOM using JavaScript.
+    The getElementById() method retrieves an element by its DOM ID. This method is more restrictive than querySelector() because you can only retrieve elements based on their particular ID. You would use this method if you only want to retrieve one element from the web page. This is because HTML IDs must be unique to a page.
+    The querySelector() method allows you to retrieve an element from the DOM using a CSS selector. It returns the first element that matches the selector. This method is more flexible than getElementById() because you can use any valid CSS selector to retrieve elements.
+
+4- Why querySelectorAll() is slower than getElementByClassName and getElementById ?
+    The querySelectorAll() method is slower than getElementByClassName() and getElementById() because it has to traverse the entire DOM tree to find all matching elements.
+
+    The getElementByClassName() method retrieves all elements that have a particular class name. This method is faster than querySelectorAll() because it only retrieves elements based on their class name.
+
+    The getElementById() method retrieves an element by its DOM ID. This method is faster than querySelectorAll() because it only retrieves one element from the web page based on its ID.
+
+    In general, it’s best to use getElementById() when you only need to retrieve one element from the web page and getElementByClassName() when you need to retrieve multiple elements based on their class name. However, if you need more flexibility in your selection criteria, then you can use querySelectorAll() 12.
+
+5- How could you verify one element is child of another ?
+    You can use the contains() method to verify if one element is a child of another element.
+
+      The contains() method returns a Boolean value indicating whether a node is a descendant of a given node or not. It takes one argument, which is the node you want to check.
+
+      Here’s an example:
+
+      const parent = document.getElementById('parent');
+      const child = document.getElementById('child');
+
+      if (parent.contains(child)) {
+        console.log('child is a descendant of parent');
+      } else {
+        console.log('child is not a descendant of parent');
+      }
+      In this example, we first retrieve the parent and child elements using getElementById(). We then use the contains() method to check if the child element is a descendant of the parent element. If it is, we log “child is a descendant of parent” to the console. Otherwise, we log “child is not a descendant of parent” 
+
+6- What is event bubbling and event capturing ?
+    The bubbling principle is simple.
+    When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.
+
+    There’s another phase of event processing called “capturing”. It is rarely used in real code, but sometimes can be useful.
+    The standard DOM Events describes 3 phases of event propagation:
+    Capturing phase – the event goes down to the element.
+    Target phase – the event reached the target element.
+    Bubbling phase – the event bubbles up from the element.
+
+    <!doctype html>
+    <body>
+    <style>
+      body * {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+    </style>
+
+    <form>FORM
+      <div>DIV
+        <p>P</p>
+      </div>
+    </form>
+
+    <script>
+      const divTag = document.querySelector('div');
+      for(let elem of document.querySelectorAll('*')) {
+        elem.addEventListener("click", e => alert(`Capturing: ${elem.tagName}`), true);
+        elem.addEventListener("click", e => {
+          alert(`Bubbling: ${elem.tagName}`)
+          if (elem.tagName === 'DIV') {
+            e.stopPropagation();
+          }
+          }, false);
+      }
+    </script>
+    </body>
+
+    <!doctype html>
+
+    <body>
+    <style>
+      body * {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+    </style>
+
+    <form>FORM
+      <div>DIV
+        <p>P</p>
+      </div>
+    </form>
+
+    <script>
+      const divTag = document.querySelector('div');
+      for(let elem of document.querySelectorAll('*')) {
+        elem.addEventListener("click", e => alert(`Bubbling: ${elem.tagName}`));
+        elem.addEventListener("click", e => {
+          alert(`Capturing: ${elem.tagName}`)
+          if (elem.tagName === 'DIV') {
+            e.stopPropagation();
+          }
+          }, true);
+      }
+    </script>
+    </body>
+
+6.1- What is the difference between event.target and event.currentTarget ?
+    event.target: The most deeply nested element that caused the event is called a target element, accessible as event.target
+    event.currentTarget (=this) – the current element that handles the event (the one that has the handler on it)
+
+6.2- How could you run event handlers in the capturing phase not in bubbling phase ?
+    To run event handlers in the capturing phase instead of the bubbling phase, you can set the third parameter of addEventListener() to true.
+
+6.3- How could you prevent multiple event handler to be fired for an event ?
+    You can use stopImmediatePropagation();
+
+    <!doctype html>
+    <body>
+    <style>
+      body * {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+    </style>
+
+    <form>FORM
+      <div>DIV
+        <p>P</p>
+      </div>
+    </form>
+
+    <script>
+      const divTag = document.querySelector('div');
+      for(let elem of document.querySelectorAll('*')) {
+        elem.addEventListener("click", e => alert(`Bubbling: ${elem.tagName}`));
+        elem.addEventListener("click", e => {
+          alert(`Capturing: ${elem.tagName}`)
+          if (elem.tagName === 'DIV') {
+            e.stopPropagation();
+          }
+          }, true);
+
+          elem.addEventListener("click", e => alert(`Capturing22: ${elem.tagName}`), true);
+      }
+    </script>
+    </body>
+
+6.4- What is a cancelable event ?
+    A cancelable event is an event that can be canceled, and therefore prevented as if the event never happened. If an event is cancelable, then its cancelable property will be true and the event listener can stop the event from occurring by calling the preventDefault() method. one can say that stopImmediatePropagation and stopPropagation is also cancelable event
+
+6.5- preventDefault() vs stoppropagation vs stopImmediatePropagation ?
+    preventDefault(), stopPropagation(), and stopImmediatePropagation() are all methods that can be called on an event object in JavaScript.
+
+    preventDefault() is used to cancel the event if it is cancelable, without stopping further propagation of the event. For example, if you have a form with a submit button, calling preventDefault() will prevent the form from being submitted.
+
+    stopPropagation() is used to prevent further propagation of the current event. This means that any parent elements that have event listeners attached will not receive the event.
+
+    stopImmediatePropagation() is similar to stopPropagation(), but it also prevents other listeners of the same event from being called. This means that if there are multiple event listeners attached to an element for the same event type, calling stopImmediatePropagation() will prevent any remaining listeners from being called.
+
+6.6- What does window.getComputedStyle() do ?
+    window.getComputedStyle() is a method that returns an object containing the values of all CSS properties of an element, after applying active stylesheets and resolving any basic computation those values may contain. Individual CSS property values are accessed through APIs provided by the object, or by indexing with CSS property names.
+
+    Here’s an example:
+
+    const element = document.getElementById('myElement');
+
+    const styles = window.getComputedStyle(element);
+
+    console.log(styles.color);
+    console.log(styles.fontSize);
+    In this example, we have an element with an ID of “myElement”. We use window.getComputedStyle() to get an object containing all of its computed styles. We then log the value of the “color” and “fontSize” properties to the console.
+
+6.7- How to find all images in DOM, including background-images?
+    To find all images in the DOM, including background-images, you can use a combination of document.getElementsByTagName() and window.getComputedStyle().
+
+    Here’s an example:
+    const allImages = document.getElementsByTagName('img');
+    for (let i = 0; i < allImages.length; i++) {
+      console.log(allImages[i].src);
+    }
+    const allElements = document.getElementsByTagName('*');
+    for (let i = 0; i < allElements.length; i++) {
+      const elementStyle = window.getComputedStyle(allElements[i]);
+      const backgroundImage = elementStyle.getPropertyValue('background-image');
+      if (backgroundImage !== 'none') {
+        console.log(backgroundImage);
+      }
+    }
+    In this example, we first get all <img> elements using document.getElementsByTagName(). We then loop through each element and log its src attribute to the console.
+    Next, we get all elements using document.getElementsByTagName(‘*’). We then loop through each element and use window.getComputedStyle() to get its computed styles. We then use getPropertyValue() to get the value of the “background-image” property. If this value is not “none”, we log it to the console.
+
+7- What is Event Delegation ?
+    Event delegation is a technique in JavaScript that allows you to attach a single event listener to a parent element, instead of attaching an event listener to each child element.
+
+    When an event occurs on a child element, the event is propagated (or “bubbles up”) to the parent element. The parent element can then handle the event using a single event listener.
+
+    This technique can be useful when you have many child elements that need to share the same event handling logic. By using event delegation, you can avoid attaching an event listener to each child element.
+
+    Here’s an example:
+
+    // Attach a single click event listener to the parent element
+    document.querySelector('#parent').addEventListener('click', function(event) {
+      // Check if the clicked element is a child of the parent
+      if (event.target.closest('.child')) {
+        // Handle the click event for child elements
+        console.log('Child element clicked');
+      }
+    });
+    In this example, we attach a single click event listener to the parent element using addEventListener(). When a click event occurs on any child element of the parent, the event bubbles up to the parent element. We then use event.target.closest() to check if the clicked element is a child of the parent. If it is, we handle the click event for child elements.
+
+8- What is Lazy Loading ? How is it implemented ?
+    Lazy loading is a technique for waiting to load certain parts of a webpage — especially images — until they are needed. Instead of loading everything all at once, known as “eager” loading, the browser does not request certain resources until the user interacts in such a way that the resources are needed1.
+    This technique can help reduce page load times by shortening the length of the critical rendering path2. Lazy loading can occur on different moments in the application, but it typically happens on some user interactions such as scrolling and navigation2.
+    Here’s an example of how lazy loading can be implemented:
+
+    <img src="placeholder.jpg" data-src="image.jpg" alt="An image" class="lazy">
+    
+    In this example, we use a placeholder image (placeholder.jpg) as the initial image source. We then use the data-src attribute to specify the actual image source (image.jpg). Finally, we add a class of “lazy” to indicate that this image should be lazy loaded.
+    To implement lazy loading, you can use a JavaScript library such as lazysizes3 or you can write your own JavaScript code.
+
+9- What is Intersection Observer API ?
+    The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document’s viewport1. The ancestor element or viewport is referred to as the root2.
+
+    The Intersection Observer API lets code register a callback function that is executed whenever an element they wish to monitor enters or exits another element (or the viewport), or when the amount by which the two intersect changes by a requested amount1.
+
+    Here’s an example of how Intersection Observer API can be implemented:
+
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0
+    }
+
+    const observer = new IntersectionObserver(callback, options);
+
+    observer.observe(target);
+    In this example, we create an IntersectionObserver object with a callback function and options. We then call the observe method on our observer object and pass in our target element.
+Mutation Observer is a powerful JavaScript API that detects changes to DOM tree elements, such as added/removed components, changed attributes, altered text content, and changed styles1. A practical use is to detect and customize content set by external scripts1.
+
+MutationObserver is a built-in object that observes a DOM element and fires a callback when it detects a change2. We can create an observer with a callback-function like this:
+
+let observer = new MutationObserver(callback);
+Here’s an example of how Mutation Observer can be implemented:
+
+const targetNode = document.getElementById('some-id');
+
+const config = { attributes: true, childList: true, subtree: true };
+
+const callback = function(mutationsList, observer) {
+    for(let mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+            console.log('A child node has been added or removed.');
+        }
+        else if (mutation.type === 'attributes') {
+            console.log('The ' + mutation.attributeName + ' attribute was modified.');
+        }
+    }
+};
+
+const observer = new MutationObserver(callback);
+
+observer.observe(targetNode, config);
+In this example, we create an observer with a callback function and options. We then call the observe method on our observer object and pass in our target element.
+
+9.1- What is Mutation Observer() ?
+    Mutation Observer is a powerful JavaScript API that detects changes to DOM tree elements, such as added/removed components, changed attributes, altered text content, and changed styles1. A practical use is to detect and customize content set by external scripts1.
+
+    MutationObserver is a built-in object that observes a DOM element and fires a callback when it detects a change2. We can create an observer with a callback-function like this:
+
+    let observer = new MutationObserver(callback);
+    Here’s an example of how Mutation Observer can be implemented:
+
+    const targetNode = document.getElementById('some-id');
+
+    const config = { attributes: true, childList: true, subtree: true };
+
+    const callback = function(mutationsList, observer) {
+        for(let mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                console.log('A child node has been added or removed.');
+            }
+            else if (mutation.type === 'attributes') {
+                console.log('The ' + mutation.attributeName + ' attribute was modified.');
+            }
+        }
+    };
+
+    const observer = new MutationObserver(callback);
+
+    observer.observe(targetNode, config);
+    In this example, we create an observer with a callback function and options. We then call the observe method on our observer object and pass in our target element.
+
+10- What are the different way to add script in our document ?
+11- How async and defer attributes are different on script loading ?
