@@ -252,7 +252,60 @@ There are several ways to get an element from DOM using JavaScript. Here are som
 
     observer.observe(target);
     In this example, we create an IntersectionObserver object with a callback function and options. We then call the observe method on our observer object and pass in our target element.
+Mutation Observer is a powerful JavaScript API that detects changes to DOM tree elements, such as added/removed components, changed attributes, altered text content, and changed styles1. A practical use is to detect and customize content set by external scripts1.
+
+MutationObserver is a built-in object that observes a DOM element and fires a callback when it detects a change2. We can create an observer with a callback-function like this:
+
+let observer = new MutationObserver(callback);
+Here’s an example of how Mutation Observer can be implemented:
+
+const targetNode = document.getElementById('some-id');
+
+const config = { attributes: true, childList: true, subtree: true };
+
+const callback = function(mutationsList, observer) {
+    for(let mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+            console.log('A child node has been added or removed.');
+        }
+        else if (mutation.type === 'attributes') {
+            console.log('The ' + mutation.attributeName + ' attribute was modified.');
+        }
+    }
+};
+
+const observer = new MutationObserver(callback);
+
+observer.observe(targetNode, config);
+In this example, we create an observer with a callback function and options. We then call the observe method on our observer object and pass in our target element.
 
 9.1- What is Mutation Observer() ?
+    Mutation Observer is a powerful JavaScript API that detects changes to DOM tree elements, such as added/removed components, changed attributes, altered text content, and changed styles1. A practical use is to detect and customize content set by external scripts1.
+
+    MutationObserver is a built-in object that observes a DOM element and fires a callback when it detects a change2. We can create an observer with a callback-function like this:
+
+    let observer = new MutationObserver(callback);
+    Here’s an example of how Mutation Observer can be implemented:
+
+    const targetNode = document.getElementById('some-id');
+
+    const config = { attributes: true, childList: true, subtree: true };
+
+    const callback = function(mutationsList, observer) {
+        for(let mutation of mutationsList) {
+            if (mutation.type === 'childList') {
+                console.log('A child node has been added or removed.');
+            }
+            else if (mutation.type === 'attributes') {
+                console.log('The ' + mutation.attributeName + ' attribute was modified.');
+            }
+        }
+    };
+
+    const observer = new MutationObserver(callback);
+
+    observer.observe(targetNode, config);
+    In this example, we create an observer with a callback function and options. We then call the observe method on our observer object and pass in our target element.
+
 10- What are the different way to add script in our document ?
 11- How async and defer attributes are different on script loading ?
