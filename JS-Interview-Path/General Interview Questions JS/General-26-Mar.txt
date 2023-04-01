@@ -236,6 +236,23 @@ There are several ways to get an element from DOM using JavaScript. Here are som
     To implement lazy loading, you can use a JavaScript library such as lazysizes3 or you can write your own JavaScript code.
 
 9- What is Intersection Observer API ?
+    The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document’s viewport1. The ancestor element or viewport is referred to as the root2.
+
+    The Intersection Observer API lets code register a callback function that is executed whenever an element they wish to monitor enters or exits another element (or the viewport), or when the amount by which the two intersect changes by a requested amount1.
+
+    Here’s an example of how Intersection Observer API can be implemented:
+
+    const options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0
+    }
+
+    const observer = new IntersectionObserver(callback, options);
+
+    observer.observe(target);
+    In this example, we create an IntersectionObserver object with a callback function and options. We then call the observe method on our observer object and pass in our target element.
+
 9.1- What is Mutation Observer() ?
 10- What are the different way to add script in our document ?
 11- How async and defer attributes are different on script loading ?
