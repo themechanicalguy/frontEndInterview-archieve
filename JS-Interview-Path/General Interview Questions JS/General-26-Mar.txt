@@ -224,8 +224,17 @@ There are several ways to get an element from DOM using JavaScript. Here are som
       }
     });
     In this example, we attach a single click event listener to the parent element using addEventListener(). When a click event occurs on any child element of the parent, the event bubbles up to the parent element. We then use event.target.closest() to check if the clicked element is a child of the parent. If it is, we handle the click event for child elements.
-    
+
 8- What is Lazy Loading ? How is it implemented ?
+    Lazy loading is a technique for waiting to load certain parts of a webpage — especially images — until they are needed. Instead of loading everything all at once, known as “eager” loading, the browser does not request certain resources until the user interacts in such a way that the resources are needed1.
+    This technique can help reduce page load times by shortening the length of the critical rendering path2. Lazy loading can occur on different moments in the application, but it typically happens on some user interactions such as scrolling and navigation2.
+    Here’s an example of how lazy loading can be implemented:
+
+    <img src="placeholder.jpg" data-src="image.jpg" alt="An image" class="lazy">
+    
+    In this example, we use a placeholder image (placeholder.jpg) as the initial image source. We then use the data-src attribute to specify the actual image source (image.jpg). Finally, we add a class of “lazy” to indicate that this image should be lazy loaded.
+    To implement lazy loading, you can use a JavaScript library such as lazysizes3 or you can write your own JavaScript code.
+
 9- What is Intersection Observer API ?
 9.1- What is Mutation Observer() ?
 10- What are the different way to add script in our document ?
