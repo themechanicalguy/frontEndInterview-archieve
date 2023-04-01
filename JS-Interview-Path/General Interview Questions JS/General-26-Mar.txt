@@ -53,7 +53,15 @@ There are several ways to get an element from DOM using JavaScript. Here are som
       In this example, we first retrieve the parent and child elements using getElementById(). We then use the contains() method to check if the child element is a descendant of the parent element. If it is, we log “child is a descendant of parent” to the console. Otherwise, we log “child is not a descendant of parent” 
 
 6- What is event bubbling and event capturing ?
-    
+    The bubbling principle is simple.
+    When an event happens on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors.
+
+    There’s another phase of event processing called “capturing”. It is rarely used in real code, but sometimes can be useful.
+    The standard DOM Events describes 3 phases of event propagation:
+    Capturing phase – the event goes down to the element.
+    Target phase – the event reached the target element.
+    Bubbling phase – the event bubbles up from the element.
+
     <!doctype html>
     <body>
     <style>
@@ -114,6 +122,9 @@ There are several ways to get an element from DOM using JavaScript. Here are som
     </body>
 
 6.1- What is the difference between event.target and event.currentTarget ?
+    event.target: The most deeply nested element that caused the event is called a target element, accessible as event.target
+    event.currentTarget (=this) – the current element that handles the event (the one that has the handler on it)
+    
 6.2- How could you run event handlers in the capturing phase not in bubbling phase ?
 6.3- How could you prevent multiple event handler to be fired for an event ?
 6.4- What is a cancelable event ?
