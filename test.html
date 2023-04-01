@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="parent">
+      <p id="child">Hello</p>
+      <div>
+        <p id="grand">nested</p>
+      </div>
+    </div>
+
+    <p class="para">Hello</p>
+    <p class="para">Hello</p>
+    <p class="para">Hello</p>
+    <p class="para">Hello</p>
+
+    <form>
+      FORM      
+      <div>
+        DIV        
+        <p>P</p>
+              
+      </div>
+          
+    </form>
+  </body>
+  <script>
+    let par = document.getElementById("parent");
+    let n = document.getElementById("child");
+    let grand = document.getElementById("grand");
+    // console.log(n.parentElement());
+    console.log(par.contains(grand));
+
+    // if (n === par) {
+    //   console.log(n);
+    // }
+
+    // let liveCollection = document.getElementsByClassName("para");
+    // console.log(liveCollection);
+    // let nodeList = document.querySelectorAll(".para");
+    // console.log(nodeList);
+    //form
+    //DIV
+    //P
+    //p
+    //div
+    //form
+    let id = document.getElementById('para');
+    let observe = new IntersectionObserver(,{
+      threshold:0,
+      root:null,
+
+    }, callback)
+
+    let obs = new MutationObserver(id);
+
+    const divTag = document.querySelector("IMG");
+    for (let elem of document.querySelectorAll("*")) {
+      elem.addEventListener(
+        "click",
+        (e) => alert(`Capturing: ${elem.tagName}`),
+        true
+      );
+      elem.addEventListener(
+        "click",
+        (e) => {
+          alert(`Bubbling: ${elem.tagName}`);
+          if (elem.tagName === "DIV") {
+            e.stopPropagation();
+          }
+        },
+        false
+      );
+    }
+  </script>
+</html>
+
+     

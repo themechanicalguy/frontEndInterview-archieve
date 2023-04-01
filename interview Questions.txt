@@ -113,6 +113,82 @@ Array and methods
 6- What is WeakMap() ? How is it different from Map() ? Can you determine size of WeakMap()?
 7- What is the difference between setTimeout and setInterval ?
 8- How to pass arg to setTimeout ? Explain example
-9- 
+
+======================================================================
+DOM
+======================================================================
+
+1- What is the difference between Window and document ?
+2- Difference between window.onload and document.onload ?
+3- What are different ways to get an element from DOM ? Whta is fastest way ?
+4- Why querySelectorAll() is slower than getElementByClassName and getElementById ?
+5- How could you verify one element is child of another ?
+6- What is event bubbling and event capturing ?
+6.1- What is the difference between event.target and event.currentTarget ?
+6.2- How could you run event handlers in the capturing phase not in bubbling phase ?
+6.3- How could you prevent multiple event handler to be fired for an event ?
+6.4- What is a cancelable event ?
+6.5- preventDefault() vs stoppropagation vs stopImmediatePropagation ?  
+6.6- What does window.getComputedStyle() do ?
+6.7- How to find all images in DOM, including background-images?
+7- What is Event Delegation ?
+8- What is Lazy Loading ? How is it implemented ?
+9- What is Intersection Observer API ?
+9.1- What is Mutation Observer() ?
+10- What are the different way to add script in our document ?
+11- How async and defer attributes are different on script loading ?
+
+==========================================================================
+OOP
+==========================================================================
+
+Explain:
+1- What are the special attributes(flags) that object have?
+
+
+Object properties, besides a value, have three special attributes (so-called “flags”):
+
+writable – if true, the value can be changed, otherwise it’s read-only.
+enumerable – if true, then listed in loops, otherwise not listed.
+configurable – if true, the property can be deleted and these attributes can be modified, otherwise not.
+
+2- How to get object flags?
+ Object.getOwnPropertyDescriptor()
+ Object.defineProperty()
+
+3- How to seal an Object ?
+  There are property descriptors that work at the level of individual properties.
+  There are also methods that limits access to entire object.
+
+4- Explain Object.preventExtension(obj) ? 
+    Forbids addition of new properties to the object. to check Object.isExtensible(obj)
+5 - Object.seal(obj) ? 
+    Forbids adding/removing of properties. Sets configurable flag to false for all properties. 
+    to check Object.isSeal(obj)
+6- explain Object.freeze(obj) ? Forbids adding/removing/changing of properties. Sets configurable and writable false.
+    to test Object.isFrozen(obj);
+
+7- What is a Prototype ?
+  Ans :- In JavaScript all objects have a special hidden property [[prototype]] that either references 
+    null or another object.
+    -> Prototype contains all the methods and properties that are accessible to all objects 
+        linked to the prototype.
+
+8- What is prototypal Inheritance ?
+  Basically Object inherit properties and methods from prototype they are linked to, 
+    this is called prototypal inheritance.
+
+9- What is __proto__ ?
+  -> We can tell __proto__ is the getter/setter for prototype.
+  -> __proto__ property always points to the objects prototype.
+  -> It exists because of historical reason. Now we use getProtypeOf/setPrototypeOf functions
+
+10- Difference between __proto__ and prototype ?
+11- What happens when we call a fucntion with new keyword ?
+12- What is prototype chain ?
+13- What is the use of Object.create() ?
+14- How to set private attribute in JS ?
+15- What is static methods ? are they inherited ?
+
 
 
