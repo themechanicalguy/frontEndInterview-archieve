@@ -101,4 +101,18 @@ console.log(clone1);
 console.log(clone2);
 
 
+=====================================================================
+Array and methods
+===================================================================
+
+1- What is the use of Array.from ?
+2- What are iterables ?  -- refer jsinfo iterables defination summary
+3- How is Map() different from Objects ? How to iterate over maps ?
+4- Explain Garbage Collection in JS?
+5- Explain mark-and-sweep algorithm ?
+6- What is WeakMap() ? How is it different from Map() ? Can you determine size of WeakMap()?
+7- What is the difference between setTimeout and setInterval ?
+8- How to pass arg to setTimeout ? Explain example
+9- 
+
 
