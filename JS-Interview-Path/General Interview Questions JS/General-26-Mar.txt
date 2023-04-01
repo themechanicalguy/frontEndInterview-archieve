@@ -124,9 +124,45 @@ There are several ways to get an element from DOM using JavaScript. Here are som
 6.1- What is the difference between event.target and event.currentTarget ?
     event.target: The most deeply nested element that caused the event is called a target element, accessible as event.target
     event.currentTarget (=this) – the current element that handles the event (the one that has the handler on it)
-    
+
 6.2- How could you run event handlers in the capturing phase not in bubbling phase ?
+    To run event handlers in the capturing phase instead of the bubbling phase, you can set the third parameter of addEventListener() to true.
+
 6.3- How could you prevent multiple event handler to be fired for an event ?
+    You can use stopImmediatePropagation();
+
+    <!doctype html>
+    <body>
+    <style>
+      body * {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+    </style>
+
+    <form>FORM
+      <div>DIV
+        <p>P</p>
+      </div>
+    </form>
+
+    <script>
+      const divTag = document.querySelector('div');
+      for(let elem of document.querySelectorAll('*')) {
+        elem.addEventListener("click", e => alert(`Bubbling: ${elem.tagName}`));
+        elem.addEventListener("click", e => {
+          alert(`Capturing: ${elem.tagName}`)
+          if (elem.tagName === 'DIV') {
+            e.stopPropagation();
+          }
+          }, true);
+
+          elem.addEventListener("click", e => alert(`Capturing22: ${elem.tagName}`), true);
+      }
+    </script>
+    </body>
+
+
 6.4- What is a cancelable event ?
 6.5- preventDefault() vs stoppropagation vs stopImmediatePropagation ?  
 6.6- What does window.getComputedStyle() do ?
