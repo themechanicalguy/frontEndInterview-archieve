@@ -163,9 +163,17 @@ There are several ways to get an element from DOM using JavaScript. Here are som
     </body>
 
 6.4- What is a cancelable event ?
-    A cancelable event is an event that can be canceled, and therefore prevented as if the event never happened. If an event is cancelable, then its cancelable property will be true and the event listener can stop the event from occurring by calling the preventDefault() method.
+    A cancelable event is an event that can be canceled, and therefore prevented as if the event never happened. If an event is cancelable, then its cancelable property will be true and the event listener can stop the event from occurring by calling the preventDefault() method. one can say that stopImmediatePropagation and stopPropagation is also cancelable event
 
-6.5- preventDefault() vs stoppropagation vs stopImmediatePropagation ?  
+6.5- preventDefault() vs stoppropagation vs stopImmediatePropagation ?
+    preventDefault(), stopPropagation(), and stopImmediatePropagation() are all methods that can be called on an event object in JavaScript.
+
+    preventDefault() is used to cancel the event if it is cancelable, without stopping further propagation of the event. For example, if you have a form with a submit button, calling preventDefault() will prevent the form from being submitted.
+
+    stopPropagation() is used to prevent further propagation of the current event. This means that any parent elements that have event listeners attached will not receive the event.
+
+    stopImmediatePropagation() is similar to stopPropagation(), but it also prevents other listeners of the same event from being called. This means that if there are multiple event listeners attached to an element for the same event type, calling stopImmediatePropagation() will prevent any remaining listeners from being called.
+
 6.6- What does window.getComputedStyle() do ?
 6.7- How to find all images in DOM, including background-images?
 7- What is Event Delegation ?
