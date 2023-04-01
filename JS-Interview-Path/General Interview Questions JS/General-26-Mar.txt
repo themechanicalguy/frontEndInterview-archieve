@@ -52,8 +52,67 @@ There are several ways to get an element from DOM using JavaScript. Here are som
       }
       In this example, we first retrieve the parent and child elements using getElementById(). We then use the contains() method to check if the child element is a descendant of the parent element. If it is, we log “child is a descendant of parent” to the console. Otherwise, we log “child is not a descendant of parent” 
 
-
 6- What is event bubbling and event capturing ?
+    
+    <!doctype html>
+    <body>
+    <style>
+      body * {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+    </style>
+
+    <form>FORM
+      <div>DIV
+        <p>P</p>
+      </div>
+    </form>
+
+    <script>
+      const divTag = document.querySelector('div');
+      for(let elem of document.querySelectorAll('*')) {
+        elem.addEventListener("click", e => alert(`Capturing: ${elem.tagName}`), true);
+        elem.addEventListener("click", e => {
+          alert(`Bubbling: ${elem.tagName}`)
+          if (elem.tagName === 'DIV') {
+            e.stopPropagation();
+          }
+          }, false);
+      }
+    </script>
+    </body>
+
+    <!doctype html>
+
+    <body>
+    <style>
+      body * {
+        margin: 10px;
+        border: 1px solid blue;
+      }
+    </style>
+
+    <form>FORM
+      <div>DIV
+        <p>P</p>
+      </div>
+    </form>
+
+    <script>
+      const divTag = document.querySelector('div');
+      for(let elem of document.querySelectorAll('*')) {
+        elem.addEventListener("click", e => alert(`Bubbling: ${elem.tagName}`));
+        elem.addEventListener("click", e => {
+          alert(`Capturing: ${elem.tagName}`)
+          if (elem.tagName === 'DIV') {
+            e.stopPropagation();
+          }
+          }, true);
+      }
+    </script>
+    </body>
+
 6.1- What is the difference between event.target and event.currentTarget ?
 6.2- How could you run event handlers in the capturing phase not in bubbling phase ?
 6.3- How could you prevent multiple event handler to be fired for an event ?
