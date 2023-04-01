@@ -8,8 +8,27 @@ DOM:
   Window Object: The window object is the topmost object of the DOM hierarchy. It represents a browser window or frame that displays the contents of the webpage. Whenever a window appears on the screen to display the contents of the document, the window object is created. 
 
 2- Difference between window.onload and document.onload ?
+The main difference between window.onload and document.onload is that window.onload waits for all the content (including images, CSS, scripts, etc.) to load before executing the code inside it. On the other hand, document.onload gets fired prior to loading of images and other external content
+
 3- What are different ways to get an element from DOM ? Whta is fastest way ?
+There are several ways to get an element from DOM using JavaScript. Here are some of them:
+
+    1/getElementById() method: This method allows you to retrieve an element from the DOM using the element’s ID. If no element exists in the DOM with the supplied ID, null will be returned instead.
+    2.querySelector() method: This method allows you to retrieve an element from the DOM using a CSS selector. It returns the first element that matches the selector.
+    3.getElementsByClassName() method: This method allows you to retrieve an array of elements from the DOM using a class name.
+    4.getElementsByTagName() method: This method allows you to retrieve an array of elements from the DOM using a tag name.
+    5.querySelectorAll() method: This method allows you to retrieve an array of elements from the DOM using a CSS selector.
+
+3a. what is the fastest way?
+    The fastest way to get an element from DOM depends on your use case and requirements. If you want to retrieve an element by its ID, then getElementById() method is the fastest way. If you want to retrieve an element using a CSS selector, then querySelector() method is the fastest way.
+3b. Which is the best way?
+    Both getElementById() and querySelector() methods are considered to be the fastest way to get an element from DOM using JavaScript.
+    The getElementById() method retrieves an element by its DOM ID. This method is more restrictive than querySelector() because you can only retrieve elements based on their particular ID. You would use this method if you only want to retrieve one element from the web page. This is because HTML IDs must be unique to a page.
+    The querySelector() method allows you to retrieve an element from the DOM using a CSS selector. It returns the first element that matches the selector. This method is more flexible than getElementById() because you can use any valid CSS selector to retrieve elements.
+
 4- Why querySelectorAll() is slower than getElementByClassName and getElementById ?
+
+
 5- How could you verify one element is child of another ?
 6- What is event bubbling and event capturing ?
 6.1- What is the difference between event.target and event.currentTarget ?
