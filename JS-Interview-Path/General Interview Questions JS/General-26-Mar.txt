@@ -175,7 +175,37 @@ There are several ways to get an element from DOM using JavaScript. Here are som
     stopImmediatePropagation() is similar to stopPropagation(), but it also prevents other listeners of the same event from being called. This means that if there are multiple event listeners attached to an element for the same event type, calling stopImmediatePropagation() will prevent any remaining listeners from being called.
 
 6.6- What does window.getComputedStyle() do ?
+    window.getComputedStyle() is a method that returns an object containing the values of all CSS properties of an element, after applying active stylesheets and resolving any basic computation those values may contain. Individual CSS property values are accessed through APIs provided by the object, or by indexing with CSS property names.
+
+    Here’s an example:
+
+    const element = document.getElementById('myElement');
+
+    const styles = window.getComputedStyle(element);
+
+    console.log(styles.color);
+    console.log(styles.fontSize);
+    In this example, we have an element with an ID of “myElement”. We use window.getComputedStyle() to get an object containing all of its computed styles. We then log the value of the “color” and “fontSize” properties to the console.
+
 6.7- How to find all images in DOM, including background-images?
+    To find all images in the DOM, including background-images, you can use a combination of document.getElementsByTagName() and window.getComputedStyle().
+
+    Here’s an example:
+    const allImages = document.getElementsByTagName('img');
+    for (let i = 0; i < allImages.length; i++) {
+      console.log(allImages[i].src);
+    }
+    const allElements = document.getElementsByTagName('*');
+    for (let i = 0; i < allElements.length; i++) {
+      const elementStyle = window.getComputedStyle(allElements[i]);
+      const backgroundImage = elementStyle.getPropertyValue('background-image');
+      if (backgroundImage !== 'none') {
+        console.log(backgroundImage);
+      }
+    }
+    In this example, we first get all <img> elements using document.getElementsByTagName(). We then loop through each element and log its src attribute to the console.
+    Next, we get all elements using document.getElementsByTagName(‘*’). We then loop through each element and use window.getComputedStyle() to get its computed styles. We then use getPropertyValue() to get the value of the “background-image” property. If this value is not “none”, we log it to the console.
+
 7- What is Event Delegation ?
 8- What is Lazy Loading ? How is it implemented ?
 9- What is Intersection Observer API ?
