@@ -162,8 +162,9 @@ There are several ways to get an element from DOM using JavaScript. Here are som
     </script>
     </body>
 
-
 6.4- What is a cancelable event ?
+    A cancelable event is an event that can be canceled, and therefore prevented as if the event never happened. If an event is cancelable, then its cancelable property will be true and the event listener can stop the event from occurring by calling the preventDefault() method.
+
 6.5- preventDefault() vs stoppropagation vs stopImmediatePropagation ?  
 6.6- What does window.getComputedStyle() do ?
 6.7- How to find all images in DOM, including background-images?
