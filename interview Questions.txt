@@ -190,5 +190,28 @@ configurable – if true, the property can be deleted and these attributes can b
 14- How to set private attribute in JS ?
 15- What is static methods ? are they inherited ?
 
+======================================================================================
+Genarator & Async Func & iterables
+======================================================================================
+
+1- What is a generator function ?
+2- Difference between regular function and generator function?
+3- How can we know if the Genarator Function has completed execution or not ?
+4- What does yield operator do ?
+5- What is an iterator ?
+
+======================================================================================
+Misc Topics
+======================================================================================
+
+1- What is Proxy? Explain with example.
+2- What is relflect?
+3- What is currying ? Explain with example.
+4- What is debouncing? Explain with example.
+5- What is throttling ? Explain with example.
+6- Explain BigINt ?
+7- What is Event Loop ?
+8- 
+
 
 

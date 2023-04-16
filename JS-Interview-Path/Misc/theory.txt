@@ -5,3 +5,23 @@
  * Currying doesn't call a function. It just transforms it.
 
  Ex:
+
+Q: What is Same origin Policy ?
+ * The same origin(same site) policy limits the access of windows and frames to each other.
+ * Suppose a user has 2 tabs open. 1 is fb.com and other is sbi.com . Then fb.com cannot access
+  a script from sbi.com.
+ * So the purpose of "Same Origin" policy is to protect users from information theft.
+
+Q: How can we say that 2 urls have same origin ?
+ * Two urls are said to have "same origin" if they have the same 
+   -> protocol
+   -> domain
+   -> port.
+
+Q: Explain postMessage() ?
+ * The postMessage() method allows windows to talk to each other no matter which origin they are from.
+ * The window.postMessage() method safely enables cross-origin communication between Window object.
+   e.g between a page and a pop-up or between a page and an iframe embedded within it.
+
+
+   
