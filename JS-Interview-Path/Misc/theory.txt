@@ -23,5 +23,71 @@ Q: Explain postMessage() ?
  * The window.postMessage() method safely enables cross-origin communication between Window object.
    e.g between a page and a pop-up or between a page and an iframe embedded within it.
 
+Q: Whta is abort controller ?
+ * As we know fetch returns a promise. JS has generally no concept of aborting a promise.
+ * AbortController is a special built-in object that is used to abort not only fetch, but other asynchronous tasks as well.
+ * AbortController is a simple object that generates an abort event on its siginal property when the abort() 
+   method is called (and also siginal.aborted to true)
+
+Q: What is CORS?
+ * CORS stands fro Cross Origin resource Sharing
+ * Cross Origin requests are those sent to another domain or port or protocol. It requires a special headers from remote site.
+ * That policy is called CORS.
+ * If a request is cross-origin browser always adds an Origin header to it.
+ * CORS exists to protect the internet from evil hackers
+ * CORS are of 2 types : 
+      1- Safe requests
+      2- All the others
+
+Q: Explain Safe Request in CORS ?
+ * A request is safe if it satisfies 2 conditions :
+   1- Safe method: GET, POST or HEAD
+   2- Safe Headers: the only allowed custom headers are:
+      * Accept
+      * Accept-language
+      * Content-language
+      * Content-type - (application/x-www-form-urlencoded, multipart/form-data or text/plain)
+ * Any other requests are considered as unsafe. i.e PUT method or with API-key HTTP-headers 
+   does not fit the limitations
+
+Q: Explain Unsafe Request in CORS ?
+ * When we try to make a unsafe request, the browser sends a special "preflight" request that 
+   asks the server - does it aceept such cross-origin requests, or not.
+ * The browser sends an OPTIONS request to the same URL, with the headers.
+   * Access-Control-Request-Method :  has requested method
+   * Access-Control-Request-Headers: lists unsasfe requested headers
+ * The server should respond with status 200 and the headers:
+   * Access-Control-Allow-Methods: with a list of allowed methods.
+   * Access-Control-Allow-Headers: with a list of allowed headers.
+   * Access-Control-Max-Age: with the number of seconds to cache the permissions
+ * Then the actual request is sent, and the previous "safe" scheme is applied.
+
+Q: What is long polling ?
+ * Long polling is the simplest way of having persistent connection with the server, that doesn't
+   use any specific protocol like WebSocket or Server Side Events.
+ * The flow of long polling :
+   * A request is sent to the server
+   * The server doesn't close the connection untill it has a message to send.
+   * When a message appears - the server responds to the request with it.
+   * The browser makes a new request immediately.
+ * The situation when the browser sent a request and has a pending connection with the the server, is
+     starndard for this method. Only when a message is delivered, the connection is reestablished.
+ * If the connection is lost, because of network issue, the browser immediately sends a new request.
+ * Long polling works great in situation when messages are rare.
+ * If messages come very often, use WebSocket or Server Sent Events.
+ 
+Q: What is WebSocket ?
+ * WebSocket protocol provides a way to exchange data between browser and server via persistent connection.
+ * The data can be passed in both directions as "packets", without breaking the connection and additional 
+   HTTP-requests.
+ * Web Socket is a great way for serving continuous data exchange, e.g online games, real-time chat application
+ 
+
+  
+
+
+
+
+
 
    
