@@ -75,14 +75,27 @@ Q: What is long polling ?
  * If the connection is lost, because of network issue, the browser immediately sends a new request.
  * Long polling works great in situation when messages are rare.
  * If messages come very often, use WebSocket or Server Sent Events.
+
+Q: What is the difference between short polling and long polling ?
  
 Q: What is WebSocket ?
+ * WebSocket allows two-way, event-driven communication between web browser and server.
  * WebSocket protocol provides a way to exchange data between browser and server via persistent connection.
  * The data can be passed in both directions as "packets", without breaking the connection and additional 
    HTTP-requests.
  * Web Socket is a great way for serving continuous data exchange, e.g online games, real-time chat application
- 
+ * Once socket is created, we should listen to events on it. There are 4 events :
+    1: Open - Connection established
+    2: message - data received
+    3: error - websocket error
+    4: close - connection closed
 
+Q: What is Server-sent Events ? How to implement it ?
+ * Server sent events is a pushing technology that enables pushing notification/message/events from the
+    server to the clients via HTTP connection.
+
+Q: Difference between WebSocket and long polling and Server-sent events ?
+ 
   
 
 
