@@ -95,6 +95,31 @@ Q: What is Server-sent Events ? How to implement it ?
     server to the clients via HTTP connection.
 
 Q: Difference between WebSocket and long polling and Server-sent events ?
+
+Q: What are Cookies?
+ * Cookies are small strings of data that are stored directly in the browser. They are a part of the HTTP protocol.
+ * Cookie are usually set by a web-server using the response Set-cookie HTTP-header.
+ * Then the browser add them to almost every request to the same domain using the Cookie HTTP-header.
+ * We can also access cookie from document.cookie property
+
+Q: Usecase of Cookie ?
+ * One of the most widespread usecase of cookie is authentication.
+  1- Once signed in, the server uses Set-Cookie HTTP-header in the response to set 
+      a cookie with unique "session identifier".
+  2- Next time when the request is sent from the same domain, the browser sends the cookie over the network
+      using the Cookie HTTP-header.
+  3- So the server knows who made the request.
+
+Q: What are session cookies ?
+ * By default a cookie doesn't have any options or attributes, it disappears when the browser is closed.
+    Such cookies are called 'Session Cookies'.
+ * If we want cookie to survive browser close, we can set the expires or max-age option.
+
+Q: What is XSRF ?
+ * 
+
+
+
  
   
 
