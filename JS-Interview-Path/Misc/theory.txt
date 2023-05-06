@@ -116,9 +116,31 @@ Q: What are session cookies ?
  * If we want cookie to survive browser close, we can set the expires or max-age option.
 
 Q: What is XSRF ?
- * 
+ * Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on 
+    a web application in which they’re currently authenticated. 
+ * With a little help of social engineering (such as sending a link via email or chat), an attacker may 
+    trick the users of a web application into executing actions of the attacker’s choosing. 
+ * If the victim is a normal user, a successful CSRF attack can force the user to perform state changing 
+    requests like transferring funds, changing their email address, and so forth. 
+ * If the victim is an administrative account, CSRF can compromise the entire web application.
 
+Q: Example of CSRF ? 
+ * Imagine you have logged in to bank.com, there you are authenticated with a token.
+ * Your browser send that cookie to bank.com with every request, so bank.com recognizes you and you perform
+    all sensitive financial operations.
+ * Now while browsing the web in another window, you accidentally come to evil.com.
+ * evil.com has a JS code that initiates a payment transaction from bank.com to the hacker account.
+ * The browser send cookie every time you visit the site bank.com, even if the payment form was submitted 
+    from evil.com. So the bank thinks its you and performs the transaction.
 
+Q: How to prevent XSRF ?
+ * The cookie samesite option provides a way to protect from XSRF attack.
+ * use samesite=strict
+
+Q: What is third-party cookie ?
+ * A cookie is called third-party if its placed by a domain other than the page the user is visiting.
+
+Q: 
 
  
   
