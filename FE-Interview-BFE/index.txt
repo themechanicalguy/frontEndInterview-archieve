@@ -1,0 +1,32 @@
+1. What are the time and space complexity for sorting algorithms ?
+
+ * Time and Space complexity is a measurment of how a given algorithm performs as you increase the size of the input.
+ * To represent the complexity of algorithms we used asymptotic notation.(Big O, Theta, Omega).
+ * We use Big O for worst case analysis.
+ * For Bubble Sort TC - O(n2) and SC - O(1).
+ * Selection sort TC - O(n2) and SC - O(1).
+ * Insertion Sort TC -  O(n2) and SC - O(1).
+ * Merge Sort TC - O(nlogn) and SC - O(n)
+ * Quick Sort TC - O(nlogn) and SC - O(logn)
+ * Heap Sort TC - O(nlogn) and SC - O(nlogn)
+ * Radix Sort TC - O(nk) and SC - O(n+k)
+
+2. What is prototypal Inheritance ? How does it work ?
+
+In JavaScript, prototypal inheritance is a mechanism where objects can inherit properties and methods from other objects.
+Every object in JavaScript has a prototype, Prototype contains all the methods and properties that are accessible to all 
+objects linked to that prototype. 
+Basically object inherit properties and methods from prototype. That is why it is called Prototypal Inheritance
+
+When an object is created, it is assigned a prototype. 
+
+If the object needs a property or a method that it doesn't have, JavaScript will look for that property or method in the object's prototype. 
+If it finds the property or method in the prototype, it will use it as if it were part of the original object.
+
+// EXAMPLE:
+const num = [1, 2, 3];
+num.map((v) => v * 2);
+
+here in array num, we are able to use map because Array.prototype has a map method and all arrays have access to it.
+since array.prototype is the prototype of num array so methods are delegated to nums array(object).
+the map method is not defined in num array itself but on its prototype(Array.prototye)
