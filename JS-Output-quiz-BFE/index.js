@@ -230,7 +230,7 @@ console.log(undefined <= 0); //false
 console.log(undefined >= 0); //false
 
 /**
- * Equal
+ * 10- Equal
  */
 
 console.log(0 == false); //true
@@ -241,3 +241,99 @@ console.log(null == false); //false -x
 console.log("1" == true); //true
 console.log(1n == true); //true
 console.log(" 1     " == true); //true
+
+/**
+ * 11- Implicit Conversion
+ */
+
+console.log([] + []); //""
+console.log([] + 1); // "1"
+console.log([[]] + 1); //"1"
+console.log([[1]] + 1); //"11"
+console.log([[[[2]]]] + 1); //"21"
+console.log([] - 1); //-1
+console.log([[]] - 1); //-1
+console.log([[1]] - 1); //0
+console.log([[[[2]]]] - 1); //1
+console.log([] + {}); //"[object, Object]"
+console.log({} + {}); //"[object, Object][object Object]"
+console.log({} - {}); //NaN
+
+/**
+ * 12- arguments
+ */
+
+function log(a, b, c, d) {
+  console.log(a, b, c, d); //1,2,3,undefined
+  arguments[0] = "bfe";
+  arguments[3] = "dev";
+
+  console.log(a, b, c, d); //'bfe',2,3,undefined
+}
+
+log(1, 2, 3);
+
+/**
+ * 13- Operator Precedence
+ */
+
+console.log((0 == 1) == 2); // false == 2 👉🏻 0 == 2 👉🏻 false
+console.log((2 == 1) == 0); // false == 0 👉🏻 0 == 0 👉🏻 true
+console.log(0 < 1 < 2); // true < 2 👉🏻 1 < 2 👉🏻 true
+console.log(1 < 2 < 3); // true < 3 👉🏻 1 < 3 👉🏻 true
+console.log(2 > 1 > 0); // true > 0 👉🏻 1 > 0 👉🏻 true
+console.log(3 > 2 > 1); // true > 1 👉🏻 1 > 1 👉🏻 false
+
+/**
+ *  14 - Addition vs Unary Plus
+ */
+
+console.log(1 + 2); //3
+console.log(1 + +2); //3
+console.log(1 + +(+2)); //3
+console.log(1 + "2"); //"12"
+console.log(1 + +"2"); //3
+console.log("1" + 2); //"12"
+console.log("1" + +2); //12
+console.log(1 + true); //NaN 2
+console.log(1 + +true); //2
+console.log("1" + true); //1true
+console.log("1" + +true); //11
+console.log(1 + null); //1
+console.log(1 + +null); //1
+console.log("1" + null); //1null
+console.log("1" + +null); //10
+console.log(1 + undefined); //NaN
+console.log(1 + +undefined); //NaN
+console.log("1" + undefined); //"1undefined"
+console.log("1" + +undefined); //"1NaN"
+console.log("1" + +(+undefined)); //"1NaN"
+
+/**
+ *  15 - instanceOf
+ */
+
+console.log(typeof null); //object
+console.log(null instanceof Object); // false
+console.log(typeof 1); // number
+console.log(1 instanceof Number); // false
+console.log(1 instanceof Object); //false
+console.log(Number(1) instanceof Object); //true --false
+console.log(new Number(1) instanceof Object); //true
+console.log(typeof true); //boolean
+console.log(true instanceof Boolean); //false
+console.log(true instanceof Object); //false
+console.log(Boolean(true) instanceof Object); //true --false
+console.log(new Boolean(true) instanceof Object); //true
+console.log([] instanceof Array); //false --true
+console.log([] instanceof Object); //true
+console.log((() => {}) instanceof Object); //false --true
+
+/**
+ *  16 - parseInt
+ */
+
+console.log(["0"].map(parseInt)); //[0]
+console.log(["0", "1"].map(parseInt)); // [0,NaN]
+console.log(["0", "1", "1"].map(parseInt)); //[0,NaN,1,1]
+console.log(["0", "1", "1", "1"].map(parseInt)); //[0,NaN,1,1]
