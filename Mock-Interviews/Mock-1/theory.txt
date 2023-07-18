@@ -1,0 +1,154 @@
+1-What is Shadow DOM? Why it is used ?
+Ans:
+  -> Shadow DOM is a Web API that provides a way to attach a hidden DOM to a DOM element.
+  -> Shadow DOM serves for encapsulation and it's element is invisuble to JavaScript selctors from the main document
+
+2- What is crossorigin and sameorigin rule? Why CORS is needed ?
+Ans: SameOrigin :
+ -> The "Same Origin" or samesite policy limits access of windows and frames to each other.
+ ->The idea is that if user has 2 pages open i.e gmail.com and yahoo.com, then they would not want a script from gmail.com  
+    to be read by yahoo.com.
+ -> So the purpose of "Same Origin" policy is to protect users from information theft.
+ -> 2 urls are sadi to be from same origin if they have same Protocol, port and domain
+
+ crossorigin:
+ -> Cross origin request means sending a request to other protocol/port/domain.
+ -> The cross origin requests - those are sent to another domain or protocol or port require special headers from the remote side.
+ -> This polict is called cross origin resource sharing
+
+ CORS exists to protect internet from evil hackers.
+
+3- How to abort a fetch request ?
+Ans:
+  -> As we know fetch returns a promise and JS has no concept to abort a promise.
+  -> JavaScript has a built-in object called AbortController.It can be used to abort not only fetch but other asynchronous tasks as well.
+    let controller = new AbortController();
+    let signal = controller.signal;
+    controller.abort(); // abort!
+    alert(signal.aborted); // true
+  -> AbortController is a simple object that generates an abort event on its signal property when the abort() method is 
+      called (and also sets signal.aborted to true).
+
+4- What is Browser Cookie ? What are its users?
+Ans: 
+  -> Cookies are small strings of data that are stored directly in the browser. They are a part of the HTTP protocol.
+  -> Cookies are usually set by a web-server using the response Set-Cookie HTTP-header. 
+  -> Then, the browser automatically adds them to (almost) every request to the same domain using the Cookie HTTP-header.
+  -> The cookie should be transferred only over HTTPS.
+  -> That’s another security attribute samesite. It’s designed to protect from so-called XSRF (cross-site request forgery) attacks.
+
+  Use:
+   One of the most widespread use cases is authentication:
+    * Upon sign in, the server uses the Set-Cookie HTTP-header in the response to set a cookie with a unique “session identifier”.
+    * Next time when the request is sent to the same domain, the browser sends the cookie over the net using the Cookie HTTP-header.
+    * So the server knows who made the request.
+
+5- What is XSRF ?
+ * Cross-Site Request Forgery (CSRF) is an attack that forces an end user to execute unwanted actions on 
+    a web application in which they’re currently authenticated. 
+ * With a little help of social engineering (such as sending a link via email or chat), an attacker may 
+    trick the users of a web application into executing actions of the attacker’s choosing. 
+ * If the victim is a normal user, a successful CSRF attack can force the user to perform state changing 
+    requests like transferring funds, changing their email address, and so forth. 
+ * If the victim is an administrative account, CSRF can compromise the entire web application.
+
+6- What is localStorage ? How it is different from cookies ?
+ -> Web storage objects localStorage allow to save key/value pairs in the browser.
+ -> In localStorage data survives a page refresh and even a full browser restart
+
+ We already have cookies. Why additional objects?
+  -> Unlike cookies, web storage objects are not sent to server with each request. 
+      Because of that, we can store much more. Most modern browsers allow at least 5 megabytes of data (or more) and
+      have settings to configure that.
+  -> Also unlike cookies, the server can’t manipulate storage objects via HTTP headers. Everything’s done in JavaScript.
+  ->The storage is bound to the origin (domain/protocol/port triplet). That is, different protocols or subdomains infer
+      different storage objects, they can’t access data from each other.
+
+7- What is Session Storage ?
+ -> Web storage objects sessionStorage allow to save key/value pairs in the browser.
+ -> In sessionStorage data survives a page refresh and gets cleared if browser restarts.
+ -> The sessionStorage object is used much less often than localStorage.
+
+8- Difference between sessionStorage and localStorage and cookies ?
+Ans: 
+  -> Cookie are part of HTTP protocol that are stored as strings directly on the browser.
+  -> localStorage allow to save key/value pairs in the browser, it resists browser restart.
+  -> sessionStorage allow to save key/value pairs in the browser and gets cleared if browser restarts.
+
+  -> Cookie can be sent by server and can be set by user as well.
+  -> localStorage and sessionStorage can only be set by user.
+
+  -> Cookie can hold upto 4kb of data
+  -> localStorage and sessionStorage can store atleast 5MB, varies based on browsers
+
+9- What is long polling ?
+ * Long polling is the simplest way of having persistent connection with the server, that doesn't
+   use any specific protocol like WebSocket or Server Side Events.
+ * The flow of long polling :
+   * A request is sent to the server
+   * The server doesn't close the connection untill it has a message to send.
+   * When a message appears - the server responds to the request with it.
+   * The browser makes a new request immediately.
+ * The situation when the browser sent a request and has a pending connection with the the server, is
+     starndard for this method. Only when a message is delivered, the connection is reestablished.
+ * If the connection is lost, because of network issue, the browser immediately sends a new request.
+ * Long polling works great in situation when messages are rare.
+ * If messages come very often, use WebSocket or Server Sent Events.
+
+ 10- What is WebSocket ?
+ * WebSocket allows two-way, event-driven communication between web browser and server.
+ * WebSocket protocol provides a way to exchange data between browser and server via persistent connection.
+ * The data can be passed in both directions as "packets", without breaking the connection and additional 
+   HTTP-requests.
+ * Web Socket is a great way for serving continuous data exchange, e.g online games, real-time chat application
+ * Once socket is created, we should listen to events on it. There are 4 events :
+    1: Open - Connection established
+    2: message - data received
+    3: error - websocket error
+    4: close - connection closed
+
+11- What is Server-sent Events ? How to implement it ?
+ * Server sent events is a pushing technology that enables pushing notification/message/events from the
+    server to the clients via HTTP connection.
+
+12- Difference between WebSocket and long polling ?
+
+13- What is currying? What are its advantages and uses ? 
+ * Currying is a function transformation technique.
+ * It transforms functions with multiple arguments and decomposing them into a sequence 
+    of functions with a single argument.
+ * Currying doesn't call a function. It just transforms it.
+
+ Advantages :
+
+ 14- What are partial functions ? How is it different from currying?
+
+ 15- What is a closure ?
+ Ans: -> Function bundled along with its lexical scope forms a closure.
+    Can write a example if needed
+
+  function x() {
+    let a = 10;
+    function y() {
+      let b = 25;
+      return function () {
+        console.log(a + b);
+      };
+    }
+    // HERE however the value of a is changed after the z variable setting the lexical scope 
+        will be changed to final assignation of the variable and this will be in z's lexical scope. 
+        In this case a will be 'I am the unexpected result'.
+    // It seems in closure the lexical scopes are stored in object which ensures the change.
+    z = y();
+    a = 29;
+    a = 'I am the unexpected result';
+    // return y();
+  }
+
+x();
+z();
+
+
+
+
+
