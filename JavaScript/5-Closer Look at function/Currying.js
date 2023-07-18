@@ -12,9 +12,9 @@ function sum(a, b) {
   return a + b;
 }
 
-let curriedSum = curry(sum);
+// let curriedSum = curry(sum);
 
-alert(curriedSum(1)(2));
+// alert(curriedSum(1)(2));
 
 //currying using
 // let multiply = function (x, y) {
@@ -32,5 +32,22 @@ let multiply = function (x) {
   };
 };
 
-let multiplyByTwo = multiply(2);
-multiplyByTwo(5);
+// let multiplyByTwo = multiply(2);
+// multiplyByTwo(5);
+
+// Example 2
+
+let curry = () => {
+  let total = 0;
+  return function (num = 0) {
+    total += num;
+    return total;
+  };
+};
+
+let sum = curry();
+
+sum(5); //5
+sum(3); //8
+sum(4); //12
+sum(0); //12
