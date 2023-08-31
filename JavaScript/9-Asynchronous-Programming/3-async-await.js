@@ -1,6 +1,6 @@
 /**
  * Async Function
- * An async function is declared wiht an async keyword.
+ * An async function is declared with an async keyword.
  * It always returns a Promise,
  * And if the value returned is not a Promise, then JS automatically wraps the value in a resolved Promise
  */

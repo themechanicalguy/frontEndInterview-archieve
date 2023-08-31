@@ -1,5 +1,4 @@
 // Handling rejected promise
-
 const getCountryData = function (country) {
   // Country 1
   fetch(`https://restcountries.eu/rest/v2/name/${country}`)

@@ -64,7 +64,7 @@ Promise.all([
 
 /**
  * If any of the promises is rejected, the promise returned by Promise.all immediately rejects with that error.
- *If one promise rejects, Promise.all immediately rejects,  completely forgetting about 
+ * If one promise rejects, Promise.all immediately rejects,  completely forgetting about 
     the other ones in the list. Their results are ignored.
  */
 

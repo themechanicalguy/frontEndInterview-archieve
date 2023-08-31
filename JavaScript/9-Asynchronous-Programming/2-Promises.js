@@ -1,12 +1,11 @@
 // What is a Promise in JavaScript?
 /**
- * An object that is used as a placeholder for the future result of an asynchronous operation
- * A container for asynchronously delivered value.
+ * Promise is a container for asynchronously delivered value.
  */
 
 // The constructor of the Promise accepts only one argument, a function with parameters resolve
 // and reject.
-new Promise(function (resolve, reject) {
+const promise = new Promise(function (resolve, reject) {
   //async code here
   //resolve if success, reject if error
 });
