@@ -315,5 +315,3 @@
   - Count "1" in binary form
 
 ---
-
-This structured format improves readability and organization while preserving all the original content. Let me know if you'd like any adjustments!
