@@ -18,12 +18,6 @@
   - If the element is an array and depth > 0, recursively flatten it with depth-1
   - Otherwise, keep the element as is
 
-### 2. Iterative Approach
-
-- Use a stack to keep track of arrays and their remaining depths
-- Process each element, flattening arrays when depth allows
-- Build the result array incrementally
-
 ## Recursive Implementation
 
 ```javascript
@@ -81,6 +75,77 @@ function flatRecursive(array, depth = Infinity) {
    - Spread [2, 3, [4]] into final result
    - Final result: [1, 2, 3, [4]]
 
+## 2. Iterative Implementation
+
+```javascript
+/**
+ * A cleaner, more readable iterative flat() implementation
+ * @param {Array} arr - The source array
+ * @param {number} depth - How many levels deep to flatten
+ * @returns {Array}
+ */
+function flatIterativeSimple(arr, depth = 1) {
+  // Use a copy to avoid mutating the original input array
+  let result = [...arr];
+  let currentDepth = depth;
+
+  // Continue as long as there's depth left AND
+  // there is at least one element that is still an array
+  while (currentDepth > 0 && result.some(Array.isArray)) {
+    // We use [].concat(...result) to flatten exactly one level
+    result = [].concat(...result);
+    currentDepth--;
+  }
+  return result;
+}
+```
+
+### Intuition & Approach
+
+- The logic is built on the behavior of the Spread Operator (...) and Array.prototype.concat().
+- The "One-Level" Trick : In JavaScript, **[].concat(...[1, [2, 3]])** evaluates to [1, 2, 3]. The spread operator `unpacks` the top-level items. concat then takes those items; if an item is an array, it merges its contents; if it's a primitive, it adds it directly.
+
+### The Strategy
+
+- **Check Necessity:** Use `result.some(Array.isArray)` to see if there is actually anything left to flatten. If the array is already "flat," we stop early even if depth is high.
+- **Controlled Loop:** We repeat the `one-level` flattening process exactly depth times.
+- **Immutability**: We start with [...arr] to ensure we don't destroy the user's original data.
+
+## Dry Run Analysis
+
+Let's trace the execution of `flatIterative(arr, 2)` where `arr = [1, [2], [3, [4]]]`.
+
+### Initial State
+
+- **result**: `[1, [2], [3, [4]]]`
+- **currentDepth**: `2`
+
+### Iteration 1
+
+**Condition Check**: `currentDepth > 0` ✓ AND `some(isArray)` ✓ (found `[2]`)
+
+**Execution**: `result = [].concat(1, [2], [3, [4]])`
+
+**New result**: `[1, 2, 3, [4]]`
+
+**Update**: `currentDepth` becomes `1`
+
+### Iteration 2
+
+**Condition Check**: `currentDepth > 0` ✓ AND `some(isArray)` ✓ (found `[4]`)
+
+**Execution**: `result = [].concat(1, 2, 3, [4])`
+
+**New result**: `[1, 2, 3, 4]`
+
+**Update**: `currentDepth` becomes `0`
+
+### Termination
+
+**Condition Check**: `currentDepth > 0` is now `False`
+
+**Final Return**: `[1, 2, 3, 4]`
+
 # 2 - Polyfill for Array.prototype.map()
 
 ## Understanding Array.prototype.map()
@@ -128,7 +193,45 @@ Array.prototype.myMap = function (callback, thisArg) {
 
   return newArray;
 };
+
+// Simple Approach
+
+Array.prototype.simpleMap = function (callback) {
+  // 1. Create a brand new array to hold the results
+  const result = [];
+
+  // 2. Loop through the current array ('this' refers to the array)
+  for (let i = 0; i < this.length; i++) {
+    // 3. Run the callback function on the current item
+    // Pass in: the item (this[i]), the index (i), and the whole array (this)
+    const transformedItem = callback(this[i], i, this);
+
+    // 4. Push the new item into our results array
+    result.push(transformedItem);
+  }
+
+  // 5. Return the new array
+  return result;
+};
 ```
+
+## What Did We Remove to Make It Simple?
+
+It helps to know what this simpler version doesn't do, just so you have the complete picture:
+
+### No Error Checking
+
+If someone accidentally passes a string instead of a function (e.g., `[1, 2].simpleMap("hello")`), this simple version will just crash. The complex version caught that and threw a helpful error.
+
+### No thisArg
+
+The real `map` lets you pass a second argument to change what the keyword `this` means inside your callback. We removed that.
+
+### Hole Ignorance
+
+If you have an array with empty slots (like `[1, , 3]`), the real `map` skips the empty slot. This simple version will pass `undefined` to your callback.
+
+- For 99% of interview questions or basic understanding, this simpler version is exactly what you need to demonstrate that you understand how higher-order functions work under the hood!
 
 ## Dry Run Examples
 
@@ -178,7 +281,7 @@ const tripled = sparseArray.myMap(function (num, index) {
 The `reduce()` method executes a reducer function on each element of the array, resulting in a single output value.
 
 - It takes two main parameters, a callback function (the "reducer") and an optional initial value.
-- The reducer function receives four arguments: accumulator, currentValue, currentIndex, and array.
+- The reducer function receives four arguments: `accumulator`, `currentValue`, `currentIndex`, and `array`.
 - The accumulator holds the intermediate result, updated after each iteration, and becomes the final result.
 
 ### Intuition and Approach
@@ -587,7 +690,7 @@ const obj = { name: "Jane" };
 
 function greet(greeting, age) {
   console.log(
-    `${greeting}, my name is ${this.name} and I am ${age} years old.`
+    `${greeting}, my name is ${this.name} and I am ${age} years old.`,
   );
 }
 
@@ -1755,12 +1858,10 @@ const arr2 = [2, 2];
 ## Final Recommendations
 
 1. **Hash Map Approach** is generally the best for unsorted arrays when you need to preserve the count of elements.
-
    - Time: O(n + m)
    - Space: O(min(n, m))
 
 2. **Sorting Approach** is good if the arrays are already sorted or if you need the result sorted.
-
    - Time: O(n log n + m log m)
    - Space: O(1) or O(n + m) depending on sorting implementation
 
