@@ -1,40 +1,26 @@
-const arr = [1, 2, 3, 4, 5];
-// const res = arr.reduce((acc, item) => acc * item, 1);
-// console.log(res);
+console.log(1);
+const promise = new Promise((resolve) => {
+  console.log(2);
+  resolve();
+  console.log(3);
+});
 
-// Array.prototype.customReducer = function (...args) {
-//   const [callback, intialValue] = args;
+console.log(4);
 
-//   for(let i=intialValue ?  )
+promise
+  .then(() => {
+    console.log(5);
+  })
+  .then(() => {
+    console.log(6);
+  });
 
-// };
-let chain = arr.map((item) => item * 2).filter((item) => item > 4);
-console.log(chain);
+console.log(7);
 
-{
-  let i = 10;
-}
+setTimeout(() => {
+  console.log(8);
+}, 10);
 
-const k = function x() {
-  let i = 0;
-  return function () {
-    return i++;
-  };
-};
-
-// let i = k();
-// console.log(i());
-// console.log(i());
-
-//
-
-const memoize = (fn) => {
-  const cache = {};
-  return function (...args) {
-    //check if the result is n cache
-    //if
-    // if(cache[])
-    // res = fn(...args);
-    // cache[res] = res;
-  };
-};
+setTimeout(() => {
+  console.log(9);
+}, 0);

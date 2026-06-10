@@ -284,6 +284,30 @@ The `reduce()` method executes a reducer function on each element of the array, 
 - The reducer function receives four arguments: `accumulator`, `currentValue`, `currentIndex`, and `array`.
 - The accumulator holds the intermediate result, updated after each iteration, and becomes the final result.
 
+## Simple Appraoch
+
+```javascript
+Array.prototype.myReduce = function (callback, initialValue) {
+  const arr = this;
+
+  // 1. Check if an initial value was passed
+  // We use arguments.length to safely handle if the user explicitly passed 'undefined'
+  const hasInitialValue = arguments.length > 1;
+
+  // 2. Set the starting accumulator and the loop's starting index
+  let accumulator = hasInitialValue ? initialValue : arr[0];
+  let startIndex = hasInitialValue ? 0 : 1;
+
+  // 3. Loop through the array and accumulate the result
+  for (let i = startIndex; i < arr.length; i++) {
+    accumulator = callback(accumulator, arr[i], i, arr);
+  }
+
+  // 4. Return the final result
+  return accumulator;
+};
+```
+
 ### Intuition and Approach
 
 **Iterative Approach:**
@@ -469,7 +493,8 @@ Array.prototype.myFilter = function (callback, thisArg) {
 
 # 5- Implementing the `call()` Method in JavaScript
 
-The call() method in JavaScript is used to invoke a function with a specified this context and arguments passed individually. It allows you to "borrow" a function from one object and execute it in the context of another object, controlling what this refers to inside the function.
+- The **call()** method in JavaScript is used to invoke a function with a specified this context and arguments passed individually.
+- It allows you to `borrow` a function from one object and execute it in the context of another object, controlling what this refers to inside the function.
 
 ```javascript
 const obj1 = { name: "Alice" };
@@ -491,38 +516,27 @@ The `call()` method:
 
 ## Intuition and Approach
 
-The call() method in JavaScript is used to invoke a function with a specified this context and arguments. To implement this method, we need to:
+Argument Description & Exp :
 
-- Set the this context of the function to the given object.
-- Pass the arguments to the function.
-- Return the result of the function call.
-  Our approach involves:
-- Creating a unique property on the context object to store the function.
-- Calling the function with the given context and arguments using the stored property.
-- Deleting the temporary property after the function call.
+- **Function.prototype.myCall:** By adding the method to the Function prototype, you ensure that every function in JavaScript inherits this method.
+- **this:** Inside myCall, this refers to the function currently being executed (e.g., if you run greet.myCall(), this is greet).
+- **context = {}**: This provides a default empty object if no context is passed.
+- **...args**: This uses the rest parameter syntax to collect all arguments passed after the context into an array.
 
-### 1. Iterative Approach
+### Approach 1
 
 ```javascript
 // Implementing the call() method in JavaScript
-Function.prototype.myCall = function (context, ...args) {
-  // Check if the context is null or undefined, if so set it to the global object
-  if (context === null || context === undefined) {
-    context = globalThis; // globalThis refers to the global object
+Function.prototype.myCall = function (context = {}, ...args) {
+  // Make sure it is invoked by function - This ensures that myCall is actually being called on a function. If someone tries to do (42).myCall(), it will throw a clear error.
+  if (typeof this !== "function") {
+    throw new Error(this + "is not callable");
   }
-
-  // Create a unique property on the context object to store the function
-  const funcKey = Symbol("funcKey"); // Using Symbol to avoid overriding existing properties
-  context[funcKey] = this; // 'this' refers to the function being called
-
-  // Call the function with the given context and arguments
-  const result = context[funcKey](...args);
-
-  // Delete the temporary property
-  delete context[funcKey];
-
-  // Return the result of the function call
-  return result;
+  // You are manually attaching the function (this) to the object (context) as a property named fn
+  context.fn = this;
+  // You execute that function using context.fn(...)
+  context.fn(...args);
+  // In JavaScript, when a function is called as a property of an object (e.g., obj.method()), the value of this inside that function is automatically set to the object. This is how the "borrowing" happens!
 };
 
 // Example 1:
@@ -535,18 +549,42 @@ const person = {
 };
 
 greet.myCall(person, "Alice"); // Output: Hello, Alice! My name is John.
+```
 
-// Example 2:
-function sum(a, b) {
-  return this.prefix + (a + b);
-}
+### Issues with this Implementation
 
-const obj = {
-  prefix: "The sum is: ",
+While the logic is sound, there are three main technical flaws:
+
+- **Property Collision:** If the context object already had a property named `fn`, your code would overwrite it permanently.
+- **Pollution:** After the function runs, the context object is left with a new `fn` property that shouldn't be there.
+- **Primitive Contexts:** If someone calls `fn.myCall("hello")`, your code will try to set "hello".fn = this. In JavaScript, you cannot add properties to strings/primitives like that, they must be wrapped in an Object.
+- While setting `context = {}` as a default parameter looks clean, it creates a significant deviation from how the real Array.prototype.call() behaves.
+- The native `call()` method is designed so that if you pass null or undefined, the this context defaults to the Global Object (window in browsers or global in Node.js).
+- In JavaScript, default parameters are only used if the argument is undefined. If a user explicitly calls `func.call(null)`, the context variable will be exactly `null`.
+
+## Approach 2
+
+```javascript
+Function.prototype.myCall = function (context, ...args) {
+  if (typeof this !== "function") {
+    throw new Error(this + " is not callable");
+  }
+
+  // 1. Handle null/undefined and wrap primitives (strings, numbers) into Objects
+  const targetContext = context ? Object(context) : globalThis;
+
+  // 2. Use a Symbol so we don't overwrite existing properties
+  const uniqueKey = Symbol("fn");
+
+  // 3. Attach and execute
+  targetContext[uniqueKey] = this;
+  const result = targetContext[uniqueKey](...args);
+
+  // 4. Clean up the object
+  delete targetContext[uniqueKey];
+
+  return result;
 };
-
-const result = sum.myCall(obj, 2, 3);
-console.log(result); // Output: The sum is: 5
 ```
 
 ## Key Points
@@ -558,25 +596,41 @@ console.log(result); // Output: The sum is: 5
 
 # 6- Implementing JavaScript's `apply()` Method
 
-The apply() method in JavaScript is used to invoke a function with a specified this context and an array (or array-like object) of arguments. It’s similar to call(), but instead of passing arguments individually, apply() takes them as an array. The key tasks are:
+- The apply() method in JavaScript is used to invoke a function with a specified this context and an array (or array-like object) of arguments.
+- It’s similar to call(), but instead of passing arguments individually, apply() takes them as an array.
 
-## Intuition and Approach
+## Approach 1 - Simple
 
-The apply() method is a part of the Function prototype in JavaScript. It allows a function to be called with a specified this value and arguments provided as an array. To implement this method manually, we need to:
+```javascript
+// Implementing the call() method in JavaScript
+Function.prototype.myApply = function (context = {}, argsArr) {
+  // Make sure it is invoked by function - This ensures that myCall is actually being called on a function. If someone tries to do (42).myCall(), it will throw a clear error.
+  if (typeof this !== "function") {
+    throw new Error(this + "is not callable");
+  }
+
+  if (!Array.isArray(argsArr)) {
+    throw new Error(argsArr + "is not an array");
+  }
+  // You are manually attaching the function (this) to the object (context) as a property named fn
+  context.fn = this;
+  // You execute that function using context.fn(...)
+  context.fn(...argsArr);
+  // In JavaScript, when a function is called as a property of an object (e.g., obj.method()), the value of this inside that function is automatically set to the object. This is how the "borrowing" happens!
+};
+```
+
+## Approach 2 - Production Ready
+
+### Intuition and Approach
+
+To implement this method manually, we need to:
+
 **Set the context**: Determine the this value for the function call. If null or undefined is provided, we default to the global object.
 **Store the function**: Temporarily add the function to the context object so that it can be called with the specified this value.
 **Call the function**: Invoke the function with the given context and arguments.
 **Clean up: Remove** the function from the context object to avoid any unintended side effects.
 **Return the result**: Pass on the result of the function call.
-
-We can approach this in two ways:
-
-1. **Iterative approach**: Use a loop to handle the arguments
-2. **Recursive approach**: Process arguments recursively
-
-## Solution Code
-
-### Iterative Approach
 
 ```javascript
 // Implementing the apply() method in JavaScript
@@ -609,15 +663,6 @@ function greet(greeting, punctuation) {
 
 const person = { name: "John" };
 greet.myApply(person, ["Hello", "!"]); // Output: Hello John!
-
-// Example 2:
-function sum(a, b, c) {
-  return a + b + c;
-}
-
-const numbers = [1, 2, 3];
-const result = sum.myApply(null, numbers);
-console.log(result); // Output: 6
 ```
 
 ## Key Notes
@@ -630,7 +675,8 @@ console.log(result); // Output: 6
 
 # 7 Implementing JavaScript's `bind()` Method
 
-The `bind()` method in JavaScript creates a new function that, when called, has its `this` keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called. It’s commonly used to ensure a function is executed in a specific context (e.g., preserving `this` in callbacks).
+- The `bind()` method in JavaScript creates a new function that, when called, has its `this` keyword set to the provided value, with a given sequence of arguments preceding any provided when the new function is called.
+- It’s commonly used to ensure a function is executed in a specific context (e.g., preserving `this` in callbacks).
 
 ### Key Features of bind():
 
@@ -638,7 +684,24 @@ The `bind()` method in JavaScript creates a new function that, when called, has 
 **Partial Application:** Allows pre-specifying some arguments.
 **Returns a New Function:** The new function retains the bound context and arguments.
 
-## Intuition and Approach
+## Approach 1 - Simple
+
+```javascript
+// Implementing the call() method in JavaScript
+Function.prototype.myBind = function (context = {}, args) {
+  if (typeof this !== "function") {
+    throw new Error(this + "is not callable");
+  }
+  context.fn = this;
+  // You execute that function using context.fn(...)
+  context.fn(...args);
+  return function (...newArgs) {
+    return context.fn(...args, newArgs);
+  };
+};
+```
+
+## Approach 2 - Prod Ready
 
 The intuition behind implementing `bind()` is to create a new function that wraps the original function with a specified context and arguments. We'll use the `Function.prototype` to add our custom `bind()` method.
 Our approach will be to:
@@ -647,18 +710,6 @@ Our approach will be to:
 - Create a new function that wraps the original function.
 - Set the this context of the new function to the provided value.
 - Prepend the provided arguments to the new function's arguments.
-
-### Iterative Approach
-
-We'll create a new function that uses `apply()` to call the original function with the bound context and combined arguments.
-
-### Recursive Approach
-
-We'll use a similar approach but implement argument combining recursively.
-
-## Implementation
-
-### Iterative Implementation
 
 ```javascript
 Function.prototype.bindIterative = function (context, ...args) {
@@ -696,6 +747,46 @@ function greet(greeting, age) {
 
 const boundGreet = greet.bindIterative(obj, "Hello");
 boundGreet(25); // Output: Hello, my name is Jane and I am 25 years old.
+```
+
+## Approach 3
+
+```javascript
+/**
+ * Polyfill for bind() without using call, apply, or the native bind.
+ */
+Function.prototype.myBind = function (context, ...boundArgs) {
+  // 1. Safety check
+  if (typeof this !== "function") {
+    throw new Error(this + " is not callable");
+  }
+
+  // 2. Save a reference to the original function
+  const originalFunction = this;
+
+  // 3. Return the wrapper function
+  return function (...newArgs) {
+    // 4. Determine the correct context (handle null/undefined)
+    // Wrap primitives in Object() so we can attach a property
+    const targetContext = context == null ? globalThis : Object(context);
+
+    // 5. Create a unique key using a Symbol to avoid property collisions
+    const fnKey = Symbol("temporaryBindFunction");
+
+    // 6. Attach the original function to the context
+    targetContext[fnKey] = originalFunction;
+
+    // 7. Execute the function as a method of the object
+    // This naturally sets 'this' inside originalFunction to targetContext
+    const result = targetContext[fnKey](...boundArgs, ...newArgs);
+
+    // 8. Clean up the temporary property
+    delete targetContext[fnKey];
+
+    // 9. Return the result of the function call
+    return result;
+  };
+};
 ```
 
 ## Key Points
@@ -802,6 +893,7 @@ Final shuffled array: [] (unchanged)
 4. Array with duplicate values - shuffles correctly
 
 The Fisher-Yates algorithm is the optimal solution as it's efficient, correct, and handles all edge cases properly. The other approaches, while simpler, don't produce truly random results and should be avoided for serious applications.
+.s..s..s.s.s
 
 # 9 Reordering an Array with New Indexes
 

@@ -30,6 +30,7 @@ setTimeout(() => {
 }, 0);
 
 // 1
+
 // 2
 // 3
 // 4
@@ -53,7 +54,7 @@ new Promise((resolve, reject) => {
   },
   (error) => {
     console.log("error");
-  }
+  },
 );
 
 // 1

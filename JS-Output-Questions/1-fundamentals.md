@@ -26,3 +26,31 @@ There are two limitations on variable names in JavaScript:
 - The first character must not be a digit.
 
 * There is a list of reserved words, which cannot be used as variable names because they are used by the language itself. For example: `let`, `class`, `return`, and `function` are reserved.
+
+## Type Conversion
+
+```javascript
+Number(null); // 0
+NUmber(undefined); // NaN
+alert(Number("   123   ")); // 123
+alert(Number("123z")); // NaN (error reading a number at "z")
+alert(Number(true)); // 1
+alert(Number(false));
+alert(Boolean("0")); // true
+alert(Boolean(" ")); // spaces, also true
+alert(Boolean("")); // false
+"" + 1 + 0 = "10" // (1)
+"" - 1 + 0 = -1 // (2)
+true + false = 1
+6 / "3" = 2
+"2" * "3" = 6
+4 + 5 + "px" = "9px"
+"$" + 4 + 5 = "$45"
+"4" - 2 = 2
+"4px" - 2 = NaN
+"  -9  " + 5 = "  -9  5" // (3)
+"  -9  " - 5 = -14 // (4)
+null + 1 = 1 // (5)
+undefined + 1 = NaN // (6)
+" \t \n" - 2 = -2 // (7)
+```
