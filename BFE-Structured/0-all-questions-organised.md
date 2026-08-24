@@ -107,12 +107,12 @@
 - **Function Implementations:**
   1. `curry()`
   2. `curry()` with placeholder support
-  3. Composition (`pipe()`)
-  4. General memoization (`memo()`)
-  5. `sum()`
-  6. `_.once()`
-  7. `memoizeOne()`
-  8. `_.partial()`
+  3. `_.partial( )`
+  4. Composition (`pipe()`)
+  5. General memoization (`memo()`)
+  6. `sum()`
+  7. `_.once()`
+  8. `memoizeOne()`
 
 ---
 
