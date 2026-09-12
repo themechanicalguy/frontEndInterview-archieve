@@ -380,3 +380,392 @@ console.log(transform2(5)); // 5*2=10, 10-3=7, 7/4=1.75  → 1.75 ✅
 - `pipe()` executes functions left-to-right (unlike `compose()` which typically goes right-to-left)
 - Each function in the pipeline must accept a single argument
 - The result is a new function that's ready to accept its initial input
+
+# 5 General memoization (`memo()`)
+
+Problem - Memoize a function that should take a function and an optional resolver for key
+
+Looking at this problem, we need to create a memoization function that:
+
+1. Caches results based on arguments
+2. Accepts an optional resolver function for custom cache keys
+3. Uses a default key generator when no resolver is provided
+
+## Solution
+
+```javascript
+function memo(func, resolver) {
+  const cache = new Map();
+
+  return function (...args) {
+    // Generate cache key
+    const key = resolver ? resolver(...args) : Array.from(args).join("_");
+
+    // Check if result exists in cache
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+
+    // Compute and cache the result
+    const result = func.apply(this, args);
+    cache.set(key, result);
+    return result;
+  };
+}
+```
+
+## Explanation
+
+### 1. **Cache Storage**
+
+We use a `Map` for caching because:
+
+- It can use any value as a key (strings, numbers, objects, etc.)
+- It has O(1) get/set operations
+- It maintains insertion order (though we don't need this feature here)
+
+### 2. **Key Generation**
+
+- If a `resolver` function is provided, we use it to generate the key
+- Otherwise, we use the default key generator: `Array.from(args).join('_')`
+- Using `Array.from(args)` converts the `arguments`-like object to a real array
+- This handles multiple arguments of any type (converted to strings)
+
+### 3. **Function Execution**
+
+- We use `func.apply(this, args)` to maintain the correct `this` context
+- This ensures the memoized function works properly when used as a method
+
+### 4. **Caching Logic**
+
+- Check if the key exists in cache → return cached value
+- Otherwise, call the original function, cache the result, and return it
+
+## Alternative Implementation (using Map with JSON.stringify)
+
+```javascript
+function memo(func, resolver) {
+  const cache = new Map();
+
+  return function (...args) {
+    const key = resolver ? resolver(...args) : JSON.stringify(args);
+
+    if (cache.has(key)) {
+      return cache.get(key);
+    }
+
+    const result = func(...args);
+    cache.set(key, result);
+    return result;
+  };
+}
+```
+
+## Edge Cases and Considerations
+
+1. **Primitive vs Reference Types**: Using `join('_')` works for primitives but converts everything to strings. This means `[1, 2]` and `['1', '2']` would share the same key `'1_2'`.
+
+2. **Objects as Arguments**: The default key generator would convert objects to `'[object Object]'`, causing all objects to share the same cache key. In such cases, a custom resolver is necessary.
+
+3. **`this` Context**: The solution uses `func.apply(this, args)` to preserve `this`, making it work when the memoized function is used as an object method.
+
+4. **Memory Usage**: Each unique combination of arguments creates a cache entry, potentially consuming significant memory. The space complexity is O(n) where n is the number of unique cached calls.
+
+## Example Usage
+
+```javascript
+// Example 1: Simple addition
+const add = (a, b) => {
+  console.log("Computing...");
+  return a + b;
+};
+
+const memoAdd = memo(add);
+console.log(memoAdd(1, 2)); // Computing... 3
+console.log(memoAdd(1, 2)); // 3 (from cache)
+console.log(memoAdd(2, 3)); // Computing... 5
+
+// Example 2: With custom resolver
+const multiply = (a, b) => a * b;
+const memoMultiply = memo(multiply, (a, b) => `${a}_${b}`);
+console.log(memoMultiply(2, 3)); // 6
+console.log(memoMultiply(2, 3)); // 6 (from cache)
+
+// Example 3: Handling objects
+const objFunc = (obj) => obj.value;
+const memoObjFunc = memo(objFunc, (obj) => obj.id);
+const obj1 = { id: 1, value: 100 };
+const obj2 = { id: 1, value: 200 };
+console.log(memoObjFunc(obj1)); // 100
+console.log(memoObjFunc(obj2)); // 100 (from cache because id is same)
+```
+
+## Complexity Analysis
+
+- **Time Complexity**: O(1) for cache lookup and storage (assuming Map operations are O(1))
+- **Space Complexity**: O(n) where n is the number of unique calls with different cache keys
+- Each cache entry stores the key and the computed result, which could be significant for large results
+
+This implementation provides a flexible and efficient memoization utility that works with any function and custom caching strategies.
+
+# 6 - Create a sum(), which makes following possible
+
+The problem requires a function `sum` that supports **arbitrary chaining** of numeric arguments while also behaving like a number when used in comparisons or other value contexts:
+
+```javascript
+const sum1 = sum(1);
+sum1(2) == 3; // true
+sum1(3) == 4; // true
+sum(1)(2)(3) == 6; // true
+sum(5)(-1)(2) == 6; // true
+```
+
+This is achieved by combining two JavaScript features:
+
+1. **Closures** (to keep track of the running total)
+2. **The `valueOf` method** (to make the function act like a number)
+
+Here is the complete solution again for reference:
+
+```js
+function sum(a) {
+  const f = (b) => sum(a + b);
+  f.valueOf = () => a;
+  return f;
+}
+```
+
+---
+
+### Step-by-step Breakdown
+
+#### 1. The outer function `sum(a)`
+
+- It receives the current total (`a`).
+- On the first call (`sum(1)`), `a` is the starting number.
+- On subsequent calls, `a` is the accumulated sum so far.
+
+#### 2. Creating the inner function `f`
+
+```js
+const f = (b) => sum(a + b);
+```
+
+- `f` is a new function that expects the next number (`b`).
+- When called, it **does not** return the sum immediately.
+- Instead, it recursively calls `sum` with the new total (`a + b`).
+- This creates a new function that “remembers” the updated total via a **closure**.
+
+This is why chaining works:
+
+```js
+sum(1)(2)(3);
+```
+
+- `sum(1)` → returns a function that knows total = 1
+- `(2)` → calls that function → returns a new function that knows total = 3
+- `(3)` → calls the new function → returns a function that knows total = 6
+
+#### 3. Making the function behave like a number (`valueOf`)
+
+```js
+f.valueOf = () => a;
+```
+
+JavaScript has a special mechanism for converting objects/functions to primitive values:
+
+- When you write `someFunction == 6` or use the function in arithmetic, the engine calls `.valueOf()` (or `.toString()` if needed).
+- By overriding `valueOf`, we tell JavaScript: “When you need the numeric value of this function, just return the current total `a`.”
+
+This is the key that makes these statements work:
+
+```js
+sum(1)(2)(3) == 6; // true  → valueOf() returns 6
+sum1(2) == 3; // true  → valueOf() returns 3
+```
+
+#### 4. Returning the function
+
+```js
+return f;
+```
+
+Every call to `sum` returns a **callable function** that can be chained further _and_ can be treated as a number.
+
+---
+
+### Execution Trace Examples
+
+**Example 1: `sum(1)(2)(3) == 6`**
+
+1. `sum(1)`  
+   → creates `f1` where `a = 1`  
+   → `f1.valueOf = () => 1`  
+   → returns `f1`
+
+2. `f1(2)` → calls `sum(1 + 2)` = `sum(3)`  
+   → creates `f2` where `a = 3`  
+   → returns `f2`
+
+3. `f2(3)` → calls `sum(3 + 3)` = `sum(6)`  
+   → creates `f3` where `a = 6`  
+   → returns `f3`
+
+4. `f3 == 6`  
+   → JavaScript calls `f3.valueOf()` → returns `6`  
+   → `6 == 6` → `true`
+
+**Example 2: Reusing the partial sum**
+
+```js
+const sum1 = sum(1); // sum1 is a function with total = 1
+
+sum1(2); // returns a function with total = 3
+sum1(3); // returns a function with total = 4  (independent call)
+```
+
+Each call starts from the original total stored in `sum1` because of the closure.
+
+---
+
+### Why This Design?
+
+| Requirement                     | How it is solved                             |
+| ------------------------------- | -------------------------------------------- |
+| Unlimited chaining              | Returning a new function each time           |
+| Ability to stop at any point    | The returned function can be used as a value |
+| Correct equality (`==`)         | Overriding `valueOf`                         |
+| Support for negative numbers    | Simple addition works with negatives         |
+| No mutation of previous results | Each call creates a fresh function           |
+
+---
+
+# 7 `_.once()`
+
+```js
+/**
+ * Creates a function that is restricted to invoking `func` once.
+ * Repeat calls to the function return the value of the first invocation.
+ * The `func` is invoked with the `this` binding and arguments of the created function.
+ *
+ * @param {Function} func The function to restrict.
+ * @returns {Function} Returns the new restricted function.
+ */
+function once(func) {
+  let called = false;
+  let result;
+
+  return function (...args) {
+    if (!called) {
+      called = true;
+      // Preserve the original `this` context and pass all arguments
+      result = func.apply(this, args);
+    }
+    return result;
+  };
+}
+```
+
+### Usage example (matching the problem)
+
+```js
+function func(num) {
+  return num;
+}
+
+const onced = once(func);
+
+console.log(onced(1)); // 1  → func is called
+console.log(onced(2)); // 1  → previous result is returned
+console.log(onced(99)); // 1 → still the first result
+```
+
+### How it works
+
+1. **Closure variables**
+   - `called` – a flag that tracks whether `func` has already been executed.
+   - `result` – stores the return value of the first (and only) invocation.
+
+2. **Returned wrapper function**
+   - On the **first call**:
+     - Sets `called = true`
+     - Invokes the original function with the correct `this` and arguments (`func.apply(this, args)`)
+     - Saves the return value
+   - On **every subsequent call**:
+     - Simply returns the saved `result` (the original function is never called again)
+
+3. **Why `apply`?**  
+   It correctly forwards the calling context (`this`) and any number of arguments, which is important if the original function relies on `this` or rest parameters.
+
+This implementation is equivalent to Lodash’s `_.once` for the common use-cases shown in the problem.
+
+---
+
+# 8 `memoizeOne()`
+
+Earlier you implemented a memo function without space concern.
+But in reality, it could be a problem if cache bloats.
+You might need to restrict the cache capacity, just like memoize-one , it only remembers the latest arguments and result.
+Please implement your own memoizeOne(), it takes 2 arguments
+
+target function
+(optional) a equality check function to compare current and last arguments
+Default equality check function should be a shallow comparison on array items with strict equal ===.
+
+```js
+/**
+ * @param {Function} func
+ * @param {(args: any[], newArgs: any[]) => boolean} [isEqual]
+ * @returns {Function}
+ */
+function memoizeOne(func, isEqual = defaultIsEqual) {
+  let lastArgs;
+  let lastThis;
+  let lastResult;
+  let hasCache = false;
+
+  return function (...newArgs) {
+    // Cache is valid only when:
+    // 1. We have cached something before
+    // 2. `this` context is the same
+    // 3. Arguments are considered equal by the provided (or default) equality check
+    if (hasCache && lastThis === this && isEqual(lastArgs, newArgs)) {
+      return lastResult;
+    }
+
+    // Cache miss → compute, store, and return
+    lastResult = func.apply(this, newArgs);
+    lastArgs = newArgs;
+    lastThis = this;
+    hasCache = true;
+
+    return lastResult;
+  };
+}
+
+/**
+ * Default equality: shallow comparison of array items with strict equality (`===`).
+ * @param {any[]} args1
+ * @param {any[]} args2
+ * @returns {boolean}
+ */
+function defaultIsEqual(args1, args2) {
+  if (args1.length !== args2.length) {
+    return false;
+  }
+  for (let i = 0; i < args1.length; i++) {
+    if (args1[i] !== args2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
+### Explanation
+
+- Only the **most recent** call is cached (`lastArgs` / `lastResult` / `lastThis`).
+- The optional `isEqual` receives the previous arguments array and the current arguments array.
+- The default equality function performs a simple length check + element-wise `===`.
+- `this` is part of the cache key (same behaviour as the popular `memoize-one` library). Changing the execution context forces a re-computation even when the arguments look identical.
+- `func.apply(this, newArgs)` preserves the correct `this` binding for the original function.
